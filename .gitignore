@@ -1,0 +1,25 @@
+# Python and test caches (runtime starts in later stages)
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+
+# Generated recognition data, models, benchmarks and private fixtures
+/data/
+/models/
+/artifacts/
+/benchmark-results/
+/tests/fixtures/private/
+
+# Editors and operating systems
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
