@@ -1,58 +1,58 @@
-# Stage 06 — HTR, mixed routing and hardening
+# Этап 06 — HTR, mixed routing и укрепление качества
 
-## Goal
+## Цель
 
-Add evidence-based handwriting/mixed recognition and complete privacy, security, regression and performance gates for Core MVP review.
+Добавить основанное на подтверждениях распознавание handwriting/mixed и завершить privacy, security, regression и performance gates для review MVP Core.
 
-## Required context
+## Обязательный контекст
 
-SPEC sections 29–32, 41–50, 59–66 and `NFR-001`, `NFR-003`–`NFR-005`, `SEC-001`–`SEC-010`, `PERF-001`, `AC-004`–`AC-011`; security/test strategy; pending ADR-P04–P05 (ADR-P03 must already be accepted in Stage 04).
+Разделы SPEC 29–32, 41–50, 59–66 и `NFR-001`, `NFR-003`–`NFR-005`, `SEC-001`–`SEC-010`, `PERF-001`, `AC-004`–`AC-011`; стратегия security/testing; ожидающие ADR-P04–P05. ADR-P03 должен быть уже принят на этапе 04.
 
-## Dependencies
+## Зависимости
 
-Stages 01–05 accepted; representative approved handwriting/mixed golden dataset exists.
+Приняты этапы 01–05; существует репрезентативный разрешённый golden dataset handwriting/mixed.
 
-## Scope
+## Область
 
-HTR candidate benchmark/selection, region-level OCR/HTR routing, fallback/review thresholds, calibration, full hostile-input/privacy/quality/performance regression and release evidence. No training/personalization/ensemble.
+Benchmark и выбор HTR-кандидатов, routing OCR/HTR на уровне regions, thresholds fallback/review, calibration, полная регрессия hostile input, privacy, quality и performance и evidence релиза. Без training/personalization/ensemble.
 
-## Tasks
+## Задачи
 
-1. Version handwriting/mixed dataset and prevent leakage/private content.
-2. Benchmark HTR candidates and accept or defer ADR-P05 based on evidence.
-3. Implement selected adapter and mixed region routing only if gates pass.
-4. Calibrate review thresholds and accept ADR-P04 with dataset-specific evidence.
-5. Complete no-egress, leakage/observability lifecycle, hostile corpus, worker isolation, supply-chain, consent, identity/scope, resource/amplification and cancellation tests.
-6. Produce reproducible MVP benchmark/security/compatibility report and release-readiness review.
+1. Версионировать dataset handwriting/mixed и предотвратить leakage и private content.
+2. Выполнить benchmark HTR-кандидатов и принять или отложить ADR-P05 по подтверждениям.
+3. Реализовать выбранный adapter и mixed routing regions только при прохождении gates.
+4. Откалибровать thresholds review и принять ADR-P04 по evidence конкретного dataset.
+5. Завершить тесты no-egress, lifecycle leakage/observability, hostile corpus, isolation worker, supply chain, consent, identity/scope, resources/amplification и cancellation.
+6. Подготовить воспроизводимый отчёт MVP benchmark/security/compatibility и review готовности релиза.
 
-## Files allowed to change
+## Файлы, которые разрешено изменять
 
-HTR engine adapter/routing, approved fixtures/manifests, benchmark/security/performance tests and reports, configuration thresholds and relevant ADR/status docs.
+HTR engine adapter/routing, разрешённые fixtures/manifests, benchmark/security/performance tests и reports, configuration thresholds и относящиеся ADR/status docs.
 
-## Files that should not change
+## Файлы, которые не должны изменяться
 
-Training/fine-tuning, user personalization, ensemble/LLM, remote deployment, consumer business logic, private datasets.
+Training/fine-tuning, user personalization, ensemble/LLM, remote deployment, business logic consumers и private datasets.
 
-## Tests
+## Тесты
 
-Shared engine contract, HTR/mixed golden metrics, confidence calibration, region routing/fallback, partial rerun, no-egress, hostile corpus, cancellation/resource limits, telemetry canary and full relevant regression.
+Общий contract suite engine, golden metrics HTR/mixed, calibration confidence, routing/fallback regions, partial rerun, no-egress, hostile corpus, cancellation/resource limits, telemetry canary и полная относящаяся regression.
 
-## Quality gates
+## Контроль качества
 
-Security and performance reviews; documented dataset/versions/environment; agreed numerical thresholds pass; no regression beyond approved tolerance; all scoped `SEC-001`–`SEC-010` and `AC-004`–`AC-011` evidence linked.
+Security и performance reviews; документированы dataset, versions и environment; согласованные численные thresholds проходят; отсутствует regression сверх разрешённого tolerance; связаны все evidence для `SEC-001`–`SEC-010` и `AC-004`–`AC-011` в текущей области.
 
-## Definition of Done
+## Определение готовности
 
-Core MVP supports at least one OCR adapter and an HTR contract; selected HTR/mixed runtime is enabled only if evidence passes. Release report makes unsupported/deferred capabilities explicit.
+Core MVP поддерживает как минимум один OCR adapter и контракт HTR; выбранный runtime HTR/mixed включается только при прохождении evidence. Release report явно показывает неподдерживаемые и отложенные capabilities.
 
-## Acceptance Criteria
+## Критерии приёмки
 
-`AC-004`, `AC-005`; local-only mixed job has zero egress; low confidence becomes review-required; results remain reproducible and traceable.
+`AC-004`, `AC-005`; local-only mixed job не имеет egress; низкий confidence приводит к review-required; results остаются воспроизводимыми и traceable.
 
-## Expected artifacts
+## Ожидаемые артефакты
 
-HTR/mixed adapter or explicit evidence-based deferral, accepted thresholds ADR, benchmark/security reports, release checklist and status/log update.
+HTR/mixed adapter или явное отложенное по evidence решение, принятый ADR thresholds, benchmark/security reports, release checklist и обновление status/log.
 
-## Failure / rollback conditions
+## Условия остановки и отката
 
-If no HTR candidate meets gates, retain the HTR port/contract and defer runtime support explicitly; do not lower thresholds or ship a weak adapter. Revert adapter enablement/config while preserving benchmark evidence.
+Если ни один HTR-кандидат не проходит gates, сохранить port/contract HTR и явно отложить runtime support; не снижать thresholds и не выпускать слабый adapter. Отменить включение и config adapter, сохранив evidence benchmark.

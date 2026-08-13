@@ -1,15 +1,15 @@
-# Application integrations
+# Интеграции приложений
 
-Application integration is an anti-corruption layer around stable TRC contracts. It has two directions:
+Интеграция приложения является anti-corruption layer вокруг стабильных контрактов TRC. Она работает в двух направлениях:
 
 ```text
-Consumer request/profile → RecognitionRequest hints
-RecognitionResult        → consumer-owned projection
+Consumer request/profile → подсказки RecognitionRequest
+RecognitionResult        → принадлежащая consumer проекция
 ```
 
-Neither direction mutates Core domain or imports consumer business services into it. Every derived field carries provenance to source Region/Line/Token IDs and revision.
+Ни одно направление не изменяет домен Core и не импортирует в него бизнес-сервисы consumer. Каждое производное поле хранит provenance до IDs исходных Region/Line/Token и revision.
 
-## Common adapter contract
+## Общий контракт adapter
 
 ```text
 ApplicationProfile
@@ -23,38 +23,38 @@ ApplicationProjector[T]
   validate_provenance(projection) -> ValidationReport
 ```
 
-Projection warnings distinguish missing source, low confidence and ambiguous mapping. A projector is deterministic for the same result, revision and adapter version.
+Предупреждения проекции различают отсутствующий источник, низкий confidence и неоднозначное сопоставление. Projector детерминирован для одинаковых result, revision и версии adapter.
 
 ## Personal Chronicle
 
-Inputs: `MIXED/HTR`, Ukrainian/Russian/English hints, `LOCAL_ONLY` allowed/expected, layout and uncertain fragments required.
+Вход: `MIXED/HTR`, подсказки Ukrainian/Russian/English, разрешённый или ожидаемый `LOCAL_ONLY`, обязательные layout и неопределённые фрагменты.
 
-Output concept (consumer-owned): document ID, probable date candidates, entry candidates, uncertain fragments and source references. TRC does not create timeline events, embeddings, RAG, summaries or answers about the diary.
+Выходная концепция, принадлежащая consumer: ID документа, вероятные даты, кандидаты записей, неопределённые фрагменты и ссылки на источники. TRC не создаёт события timeline, embeddings, RAG, summaries или ответы о дневнике.
 
-Acceptance: raw page layout remains recoverable; every entry/uncertain fragment references source IDs; no network adapter is selected under `LOCAL_ONLY`.
+Приёмка: raw layout страницы можно восстановить; каждая запись и неопределённый фрагмент ссылаются на source IDs; при `LOCAL_ONLY` не выбирается сетевой adapter.
 
 ## Receipt Scanner
 
-Inputs: OCR + layout, country `UA`, currency hint `UAH`, receipt capability optional until supported.
+Вход: OCR и layout, страна `UA`, подсказка валюты `UAH`, необязательная receipt capability до появления её поддержки.
 
-Output concept: merchant/timestamp/items/subtotal/discount/total/currency with confidence and source references for every populated field. Parsing/extraction belongs to integration package; expense categories and analytics belong to Receipt Scanner.
+Выходная концепция: merchant, timestamp, items, subtotal, discount, total и currency с confidence и source references для каждого заполненного поля. Parsing/extraction относятся к пакету интеграции; категории расходов и аналитика принадлежат Receipt Scanner.
 
-Acceptance: total/item fields link to tokens/regions; ambiguous amounts are warnings, not fabricated values; arithmetic validation cannot overwrite raw text.
+Приёмка: поля total/items ссылаются на tokens/regions; неоднозначные суммы выдаются как предупреждения, а не выдуманные значения; арифметическая проверка не может перезаписать raw text.
 
 ## Tutor
 
-Inputs: MIXED, layout, handwriting; future `MATH`, `TABLE`, `DIAGRAM`, `ANSWER_REGION`, `TEACHER_COMMENT` capabilities.
+Вход: MIXED, layout, handwriting; будущие capabilities `MATH`, `TABLE`, `DIAGRAM`, `ANSWER_REGION`, `TEACHER_COMMENT`.
 
-Output concept: printed assignment/handwritten answer/teacher comment region candidates with provenance. Student, lesson, grading and solution generation stay in Tutor.
+Выходная концепция: кандидаты regions печатного задания, рукописного ответа и комментария преподавателя с provenance. Student, lesson, grading и генерация решения остаются в Tutor.
 
-Acceptance: unsupported required math capability is explicit; optional future capability degrades with warning; printed and handwritten regions can route to different engines.
+Приёмка: отсутствие обязательной math capability сообщается явно; необязательная будущая capability деградирует с предупреждением; печатные и рукописные regions могут направляться разным engines.
 
-## New consumer onboarding
+## Подключение нового consumer
 
-1. Define a consumer-owned projection SPEC.
-2. Select existing capabilities and privacy modes; new Core capability requires separate review.
-3. Implement input profile and projector outside Core domain.
-4. Add contract/fixture tests with synthetic or approved data.
-5. Prove no direct OCR SDK dependency in the consumer.
+1. Определить принадлежащую consumer SPEC проекции.
+2. Выбрать существующие capabilities и privacy modes; новая capability Core требует отдельной проверки.
+3. Реализовать input profile и projector вне домена Core.
+4. Добавить contract/fixture tests на синтетических или разрешённых данных.
+5. Доказать отсутствие прямой зависимости consumer от OCR SDK.
 
-Success means the consumer connects through existing TRC API without copying pipeline or correction logic.
+Успех означает, что consumer подключается через существующий API TRC без копирования pipeline или логики corrections.

@@ -1,59 +1,59 @@
-# Stage 01 — Foundation and typed contracts
+# Этап 01 — Фундамент и типизированные контракты
 
-## Goal
+## Цель
 
-Create a Python library foundation and immutable typed contracts for the Core without product integrations.
+Создать фундамент Python-библиотеки и неизменяемые типизированные контракты Core без продуктовых интеграций.
 
-## Required context
+## Обязательный контекст
 
-`AGENTS.md`; SPEC sections 7–16, 40, 56–58 and IDs `FR-001`, `FR-002`, `FR-010`, `NFR-002`, `NFR-005`, `AC-001`; `docs/ARCHITECTURE.md`, `API.md`, `DATA_MODEL.md`, ADR-002–005; current `AI_STATUS`/`AI_PLAN`.
+`AGENTS.md`; разделы SPEC 7–16, 40, 56–58 и IDs `FR-001`, `FR-002`, `FR-010`, `NFR-002`, `NFR-005`, `AC-001`; `docs/ARCHITECTURE.md`, `API.md`, `DATA_MODEL.md`, ADR-002–005; текущие `AI_STATUS` и `AI_PLAN`.
 
-## Dependencies
+## Зависимости
 
-Accepted KАРКАС; supported Python 3.13 environment. No earlier code stage.
+Принятый КАРКАС и поддерживаемая среда Python 3.13. Предыдущих этапов кода нет.
 
-## Scope
+## Область
 
-Packaging, domain values/entities, application ports, schema boundary, deterministic IDs/clock ports, in-memory test doubles and foundational tests.
+Упаковка, domain values/entities, application ports, граница schema, ports детерминированных IDs и clock, in-memory test doubles и фундаментальные тесты.
 
-## Tasks
+## Задачи
 
-1. Create `pyproject.toml` and `src/` package boundaries matching architecture.
-2. Implement strict immutable value types for IDs, coordinates, confidence, modes/capabilities/privacy, errors and provenance.
-3. Implement typed request/result and Document/Page/Region/Line/Token contracts; separate raw/current revision IDs.
-4. Define framework-neutral engine/storage/job/cancellation ports without concrete adapters.
-5. Generate JSON Schema from one boundary model source and add version/compatibility fixture.
-6. Add architecture/import-boundary and domain invariant tests.
-7. Create a hash-locked dependency set, trusted-index policy and initial SBOM/license/vulnerability/unsafe-deserialization checks.
+1. Создать `pyproject.toml` и границы пакета `src/`, соответствующие архитектуре.
+2. Реализовать строгие неизменяемые value types для IDs, coordinates, confidence, modes/capabilities/privacy, errors и provenance.
+3. Реализовать типизированные контракты request/result и Document/Page/Region/Line/Token; разделить IDs raw и current revision.
+4. Определить независимые от фреймворка ports engine/storage/job/cancellation без конкретных adapters.
+5. Генерировать JSON Schema из одного источника boundary models и добавить fixture версии и совместимости.
+6. Добавить тесты границ architecture/import и domain invariants.
+7. Создать набор dependencies с закреплёнными hashes, политику доверенных indexes и первоначальные проверки SBOM/license/vulnerability/unsafe deserialization.
 
-## Files allowed to change
+## Файлы, которые разрешено изменять
 
-Packaging files; `src/text_recognition_core/domain/**`, `application/**`, `schemas/**`; `tests/unit/**`, `tests/contracts/schema/**`; factual status/decision/log docs.
+Файлы упаковки; `src/text_recognition_core/domain/**`, `application/**`, `schemas/**`; `tests/unit/**`, `tests/contracts/schema/**`; фактические документы status/decision/log.
 
-## Files that should not change
+## Файлы, которые не должны изменяться
 
-SPEC behavior; engine/storage/REST/application-adapter implementation; golden/private fixtures; global workspace configuration.
+Поведение SPEC; реализация engine/storage/REST/application adapters; golden/private fixtures; глобальная конфигурация workspace.
 
-## Tests
+## Тесты
 
-Strict valid/invalid schema cases including single/batch requests and both batch policies, JSON depth/cardinality/body/response boundaries, nested hierarchy, coordinate bounds, finite confidence, reading order/ID rules, error serialization, generated schema snapshot, forbidden infrastructure imports, lock drift and forbidden executable/object serialization.
+Строгие допустимые и недопустимые случаи schema, включая одиночные и batch requests и обе batch policies, границы глубины и cardinality JSON, body и response, вложенную иерархию, границы coordinates, конечный confidence, правила reading order и IDs, serialization errors, snapshot сгенерированной schema, запрещённые imports infrastructure, lock drift и запрещённую исполняемую или объектную serialization.
 
-## Quality gates
+## Контроль качества
 
-Formatter/linter/type checker/test suite pass; no framework/OCR/database imports in domain/application; public contracts trace to scoped requirement IDs; dependency hashes/SBOM/license/vulnerability evidence exists from the first installable package.
+Проходят formatter, linter, type checker и test suite; в domain/application отсутствуют imports framework/OCR/database; public contracts трассируются к IDs требований текущей области; с первого устанавливаемого пакета существуют подтверждения hashes dependencies, SBOM, licenses и vulnerabilities.
 
-## Definition of Done
+## Определение готовности
 
-Package installs locally, contracts can validate/serialize representative examples, schema generation is deterministic and all ports lack infrastructure implementation.
+Пакет устанавливается локально, contracts могут валидировать и сериализовать репрезентативные примеры, генерация schema детерминирована, а все ports не имеют реализации infrastructure.
 
-## Acceptance Criteria
+## Критерии приёмки
 
-`AC-001`, `AC-010`; architectural `NFR-002`; explicit API/schema versions and raw/current ID separation.
+`AC-001`, `AC-010`; архитектурное `NFR-002`; явные версии API/schema и разделение raw/current IDs.
 
-## Expected artifacts
+## Ожидаемые артефакты
 
-Python package skeleton, generated schema fixtures, tests, updated factual status/log and any necessary ADR refinement.
+Каркас пакета Python, fixtures сгенерированных schemas, tests, обновлённые по фактам status/log и необходимые уточнения ADR.
 
-## Failure / rollback conditions
+## Условия остановки и отката
 
-Stop if contracts require changing SPEC semantics, if one model truth cannot generate schemas, or if domain requires a framework import. Roll back the stage commit; no migration/external state is allowed.
+Остановиться, если contracts требуют изменить семантику SPEC, если один источник models не может генерировать schemas или если domain требует import фреймворка. Отменить commit этапа; миграции и внешнее состояние запрещены.

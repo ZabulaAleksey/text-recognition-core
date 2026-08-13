@@ -1,28 +1,26 @@
-# Development log
+# Журнал разработки
 
-## 2026-08-13 — KАРКАС bootstrap
+## 2026-08-13 — Bootstrap КАРКАСА
 
-- Read `Определение для Codex.md`, full source `SPEC.md`, workspace routing/SDD/domain rules and active AI Dev Team capabilities.
-- Performed read-only architecture and global overlay audits.
-- Verified GitHub repository `ZabulaAleksey/text-recognition-core` exists, is empty, uses `main` and grants push/admin permissions.
-- Initialized a standalone Git repository, created `docs/project-skeleton` and configured `origin`.
-- Moved the canonical specification to `specs/system.spec.md`, added stable requirement/acceptance IDs and created the project KАРКАС documents.
-- Resolved workspace conflicts: `AI_STATUS` instead of `PROGRESS`, `AI_PLAN` separate from prompt library, canonical docs paths, no duplicate AI infrastructure.
-- Chose a contract-first Python baseline; deferred OCR/HTR and binary-decoder choices to evidence gates.
-- Created no product source code and performed no push/merge.
+- Прочитаны `Определение для Codex.md`, полная исходная `SPEC.md`, правила маршрутизации, SDD и доменов workspace и активные возможности AI Dev Team.
+- Выполнены read-only аудиты архитектуры и глобального overlay.
+- Проверено, что GitHub-репозиторий `ZabulaAleksey/text-recognition-core` существует, пуст, использует `main` и предоставляет разрешения push/admin.
+- Инициализирован самостоятельный Git-репозиторий, создана ветка `docs/project-skeleton` и настроен `origin`.
+- Каноническая спецификация перемещена в `specs/system.spec.md`, добавлены стабильные IDs требований и приёмки и созданы документы КАРКАСА проекта.
+- Разрешены конфликты workspace: `AI_STATUS` вместо `PROGRESS`, отдельный от библиотеки prompts `AI_PLAN`, канонические пути документов и отсутствие дубликатов AI-инфраструктуры.
+- Выбрана основа Python с contract-first подходом; выбор OCR/HTR и binary decoder отложен до evidence gates.
+- Product source code не создавался; push и merge не выполнялись.
 
-### Notable issue
+### Существенная проблема
 
-Git initially rejected the newly initialized nested repository because sandbox and Windows directory owners differ. Subsequent local commands use a repository-specific `safe.directory` command option; no global Git setting was changed.
+Git первоначально отклонил новый вложенный repository из-за различия владельцев каталогов sandbox и Windows. Последующие локальные команды используют специфичный для repository параметр `safe.directory`; глобальная настройка Git не изменялась.
 
-### Planned verification
+### Выполненные проверки
 
-Completed verification:
-
-- all relative Markdown links resolve;
-- every one of six stage prompts contains all 13 required sections;
-- only one status/source file candidate exists (`docs/AI_STATUS.md`); no obsolete canonical layout blocks remain;
-- requirement registry contains 37 stable IDs;
-- independent reviewer returned `PASS` after dependency allowlist, canonical naming, batch/rerun/rollback/correction/revision API and empty-repository workflow fixes;
-- independent security reviewer returned `PASS` after isolation, amplification, local identity, actor/consent, supply-chain, retention/deletion, cache/idempotency and SSRF gates were made explicit;
-- no product `src/`, dependencies, runtime or private fixtures were created.
+- все относительные Markdown links разрешаются;
+- каждый из шести stage prompts содержит все 13 обязательных разделов;
+- существует только один кандидат status/source (`docs/AI_STATUS.md`); устаревших канонических блоков layout нет;
+- registry требований содержит 37 стабильных IDs;
+- независимый reviewer вернул `PASS` после исправлений allowlist dependencies, канонических имён, API batch/rerun/rollback/correction/revision и процесса пустого repository;
+- независимый security reviewer вернул `PASS` после явной фиксации изоляции, amplification, local identity, actor/consent, supply chain, retention/deletion, cache/idempotency и SSRF gates;
+- product `src/`, dependencies, runtime и приватные fixtures не создавались.

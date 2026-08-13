@@ -1,58 +1,58 @@
-# Stage 05 — Application adapters
+# Этап 05 — Adapters приложений
 
-## Goal
+## Цель
 
-Connect the three initial consumers through separate input profiles and output projectors with complete provenance and no Core domain leakage.
+Подключить трёх первоначальных consumers через отдельные input profiles и output projectors с полным provenance и без утечки домена Core.
 
-## Required context
+## Обязательный контекст
 
-SPEC sections 24, 33–36, 67, 82–83 and `FR-008`, `AC-006`; `docs/INTEGRATIONS.md`, result/data contracts and integration test strategy; ADR-008.
+Разделы SPEC 24, 33–36, 67, 82–83 и `FR-008`, `AC-006`; `docs/INTEGRATIONS.md`, контракты result/data и стратегия integration tests; ADR-008.
 
-## Dependencies
+## Зависимости
 
-Stable recognition/revision API from Stages 01–04.
+Стабильный API recognition/revision из этапов 01–04.
 
-## Scope
+## Область
 
-Integration packages/contracts and synthetic adapter fixtures for Personal Chronicle, Receipt Scanner and Tutor. Consumer application changes require separate repository tasks.
+Integration packages/contracts и синтетические fixtures adapters для Personal Chronicle, Receipt Scanner и Tutor. Изменения приложений-consumers требуют отдельных задач в их репозиториях.
 
-## Tasks
+## Задачи
 
-1. Implement common profile/projector contract and version/provenance validation.
-2. Implement Chronicle projection without RAG/timeline/summary logic.
-3. Implement receipt extraction projection with amount/item/source links and explicit ambiguity.
-4. Implement Tutor region projection without student/grading/solution logic.
-5. Add dependency checks preventing consumer entities/services inside Core.
-6. Publish onboarding example for a fourth consumer through existing contracts.
+1. Реализовать общий контракт profile/projector и validation version/provenance.
+2. Реализовать проекцию Chronicle без логики RAG/timeline/summary.
+3. Реализовать проекцию extraction чеков со ссылками amount/item/source и явной неоднозначностью.
+4. Реализовать проекцию regions Tutor без логики student/grading/solution.
+5. Добавить проверки dependencies, запрещающие entities/services consumers внутри Core.
+6. Опубликовать пример подключения четвёртого consumer через существующие contracts.
 
-## Files allowed to change
+## Файлы, которые разрешено изменять
 
-Integration packages, schemas owned by those packages, synthetic fixtures, adapter/contract tests and integration docs.
+Integration packages, принадлежащие им schemas, синтетические fixtures, adapter/contract tests и документация интеграций.
 
-## Files that should not change
+## Файлы, которые не должны изменяться
 
-Core domain vocabulary, OCR pipeline/correction semantics, consumer repositories, private user data, unsupported math/business features.
+Vocabulary домена Core, семантика OCR pipeline и corrections, репозитории consumers, приватные пользовательские данные и неподдерживаемые math/business features.
 
-## Tests
+## Тесты
 
-Deterministic projections, provenance coverage, low-confidence/missing/ambiguous fields, privacy profiles, schema versioning and forbidden dependency/import checks.
+Детерминированные projections, покрытие provenance, поля low-confidence/missing/ambiguous, privacy profiles, schema versioning и проверки запрещённых dependencies/imports.
 
-## Quality gates
+## Контроль качества
 
-`AC-006`; 100% populated derived fields have valid source references or explicit derived provenance; no direct OCR SDK in integrations; no consumer business service in Core.
+`AC-006`; 100% заполненных производных полей имеют действующие source references или явный derived provenance; в integrations отсутствует прямой OCR SDK; в Core отсутствуют business services consumers.
 
-## Definition of Done
+## Определение готовности
 
-All three projections consume the same stable result and a sample new consumer can be added without changing Core contracts.
+Все три projections принимают один стабильный result, а пример нового consumer добавляется без изменения contracts Core.
 
-## Acceptance Criteria
+## Критерии приёмки
 
-Receipt amounts trace to tokens/regions, Chronicle supports `LOCAL_ONLY`, Tutor degrades unsupported optional capability explicitly, and adapter mapping never overwrites raw text.
+Суммы чека трассируются к tokens/regions, Chronicle поддерживает `LOCAL_ONLY`, Tutor явно деградирует неподдерживаемую необязательную capability, а mapping adapter никогда не перезаписывает raw text.
 
-## Expected artifacts
+## Ожидаемые артефакты
 
-Three versioned integration packages/contracts, synthetic fixtures/tests, onboarding documentation and status/log update.
+Три версионированных integration packages/contracts, синтетические fixtures/tests, документация onboarding и обновление status/log.
 
-## Failure / rollback conditions
+## Условия остановки и отката
 
-Stop if a projection requires consumer business logic in Core or an unversioned public contract change. Revert only the affected integration package; Core remains usable.
+Остановиться, если projection требует business logic consumer внутри Core или неверсионированного изменения public contract. Отменить только затронутый integration package; Core остаётся пригодным для использования.

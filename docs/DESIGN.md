@@ -1,29 +1,29 @@
-# Product design
+# Дизайн продукта
 
-TRC currently has no end-user UI. The first implementation is library/application contracts; REST/CLI and a Review/Correction UI are later interfaces over the same use cases.
+Сейчас у TRC нет пользовательского интерфейса. Первая реализация представляет собой контракты Library/Application; REST/CLI и интерфейс проверки и исправления появятся позднее поверх тех же use cases.
 
-## Future review workflow
+## Будущий сценарий проверки
 
-1. Show page image and recognized structure without altering raw evidence.
-2. Highlight low-confidence regions/tokens and explain `REVIEW_REQUIRED`.
-3. Let the user compare alternatives, edit text/layout, mark correct/uncertain/ignored and rerun a selected scope.
-4. Preview the new revision and provenance before commit.
-5. Expose revision history, diff and rollback; clearly distinguish raw, current and selected historical view.
-6. Ask separately for training/export consent; never bundle it with correction acceptance.
+1. Показать изображение страницы и распознанную структуру без изменения raw evidence.
+2. Выделить regions/tokens с низким confidence и объяснить состояние `REVIEW_REQUIRED`.
+3. Дать пользователю сравнить alternatives, изменить текст или layout, отметить результат как правильный, неопределённый или игнорируемый и повторно запустить выбранный scope.
+4. Перед commit показать новую revision и provenance.
+5. Предоставить историю revisions, diff и rollback; ясно различать raw, текущее и выбранное историческое представление.
+6. Отдельно запрашивать согласие на обучение или export; никогда не объединять его с принятием correction.
 
-## Required states
+## Обязательные состояния
 
-- loading/progress with page and pipeline stage;
-- empty/no recognized content without fabricated text;
-- review-required with count and navigation;
-- partial/fallback warning with usable output;
-- fatal safe error with retryability/correlation ID;
+- loading/progress с указанием страницы и этапа pipeline;
+- empty/no recognized content без выдуманного текста;
+- review-required с количеством элементов и навигацией;
+- предупреждение partial/fallback с пригодным для использования результатом;
+- безопасная fatal error с retryability и correlation ID;
 - cancellation pending/cancelled;
-- revision conflict with refresh/compare rather than silent overwrite;
-- offline/privacy indicator showing enforced mode.
+- конфликт revision с обновлением или сравнением вместо скрытой перезаписи;
+- индикатор offline/privacy с отображением фактически применяемого режима.
 
-## Interaction constraints
+## Ограничения взаимодействия
 
-Coordinates and provenance must allow bidirectional selection between text and source image. Keyboard navigation, focus visibility, semantic labels, zoom and non-color confidence cues are mandatory when UI work starts. Responsive layout must keep image/text comparison usable; exact visual tokens are intentionally undecided until a UI stage and must not be invented here.
+Координаты и provenance должны поддерживать двунаправленное выделение текста и соответствующей области исходного изображения. После начала UI-разработки обязательны клавиатурная навигация, видимый focus, семантические labels, zoom и обозначение confidence не только цветом. Responsive layout должен сохранять удобство сравнения изображения и текста; точные визуальные tokens намеренно не определены до UI-этапа и не должны выдумываться сейчас.
 
-The UI must not expose vendor-engine controls as required application concepts. Advanced engine selection may be an optional diagnostic control governed by capabilities and privacy policy.
+UI не должен представлять управляющие параметры конкретного engine как обязательные понятия приложения. Расширенный выбор engine может быть необязательной диагностической возможностью, регулируемой capabilities и privacy policy.

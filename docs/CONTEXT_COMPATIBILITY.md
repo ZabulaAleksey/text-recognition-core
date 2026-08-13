@@ -1,32 +1,32 @@
-# Context compatibility audit
+# Аудит совместимости контекста
 
 Аудит выполнен 2026-08-13 перед созданием project overlay.
 
-| Возможность | Что уже есть глобально / workspace | Потребность TRC | Статус | Решение / источник |
+| Возможность | Что уже есть глобально / в workspace | Потребность TRC | Статус | Решение / источник |
 |---|---|---|---|---|
-| Architecture/planning | architect, planner, `plan-stage` | OCR-specific contracts | `EXTEND` | generic roles + project docs |
-| Testing/review | test_engineer, reviewer, `review-change` | engine/golden/replay suites | `EXTEND` | project `TEST_STRATEGY.md`; no agent copy |
-| Security | security_reviewer, security rules | hostile documents/privacy modes | `EXTEND` | project `SECURITY.md`; no agent copy |
-| Documentation/status | workspace docs policy and SessionStart context | one status/plan | `CONFLICT` resolved | `docs/AI_STATUS.md` + `docs/AI_PLAN.md`; no `PROGRESS.md` |
-| Specification path | workspace `specs/system.spec.md` | source was root `SPEC.md` | `CONFLICT` resolved | moved to canonical path; no duplicate |
-| Logs | optional workspace templates | explicit educational/technical value | `PROJECT_ONLY` | `docs/LEARNING_LOG.md`, `docs/DEV_LOG.md` |
-| Git workflow | workspace branch/commit rules | standalone repository | `INHERITED` | no local workflow copy |
-| Session/destructive hooks | active global hooks | no additional bootstrap need | `INHERITED` | no local hooks |
-| Schema/golden/privacy hooks | none project-specific | may become enforcement after tests exist | `OBSOLETE` now | begin as tests/CI; reconsider with evidence |
-| Supply-chain/model integrity | generic security review; no project lock yet | hashes/SBOM/artifact manifests from Stage 01 | `EXTEND` | project tests/CI and `SEC-009`; no hook at bootstrap |
-| Skills | global plan/implement/fix/review/explain | repeated OCR benchmark may need procedure later | `INHERITED` now | no local Skill; reassess after repeated workflow |
-| Generic subagents | architecture/backend/database/test/security/performance/release | no uncovered role | `INHERITED` | no local agents |
-| OCR specialist | none generic | possible future evaluation gap | `OBSOLETE` now | use specialists + project strategy; reassess after Stage 02 |
-| Development MCP | configured tools when active | no mandatory OCR dev connector | `INHERITED`/not relied on | no local MCP |
-| Product MCP | none | future interface over Core | `PROJECT_ONLY` later | Stage 07; not bootstrap |
-| Codex config/rules | workspace/global | thin local invariants | `EXTEND` | `AGENTS.md`; no `.codex/config.toml` |
+| Архитектура и планирование | architect, planner, `plan-stage` | специфичные для OCR контракты | `EXTEND` | общие роли и документы проекта |
+| Тестирование и review | test_engineer, reviewer, `review-change` | наборы engine/golden/replay | `EXTEND` | проектный `TEST_STRATEGY.md`; без копии agent |
+| Безопасность | security_reviewer и security rules | вредоносные документы и privacy modes | `EXTEND` | проектный `SECURITY.md`; без копии agent |
+| Документация и статус | политика workspace docs и контекст SessionStart | один status и plan | конфликт разрешён | `docs/AI_STATUS.md` и `docs/AI_PLAN.md`; без `PROGRESS.md` |
+| Путь спецификации | workspace `specs/system.spec.md` | исходником был корневой `SPEC.md` | конфликт разрешён | перемещён в канонический путь; без дубликата |
+| Журналы | необязательные workspace templates | явная учебная и техническая ценность | `PROJECT_ONLY` | `docs/LEARNING_LOG.md`, `docs/DEV_LOG.md` |
+| Git workflow | правила branches и commits workspace | самостоятельный repository | `INHERITED` | без локальной копии workflow |
+| Hooks сессии и разрушительных команд | активные глобальные hooks | дополнительная bootstrap-потребность отсутствует | `INHERITED` | без локальных hooks |
+| Hooks schema/golden/privacy | специфичных проектных hooks нет | могут стать enforcement после появления тестов | сейчас `OBSOLETE` | начать с tests/CI; пересмотреть по фактам |
+| Целостность supply chain и models | общий security review; project lock пока отсутствует | hashes, SBOM и manifests артефактов с этапа 01 | `EXTEND` | project tests/CI и `SEC-009`; без hook на bootstrap |
+| Skills | глобальные plan/implement/fix/review/explain | позднее повторяемому OCR benchmark может понадобиться процедура | сейчас `INHERITED` | без локального Skill; пересмотреть после повторений |
+| Общие subagents | architecture/backend/database/test/security/performance/release | непокрытой роли нет | `INHERITED` | без локальных agents |
+| Специалист OCR | общей роли нет | возможный будущий пробел evaluation | сейчас `OBSOLETE` | использовать специалистов и стратегию проекта; пересмотреть после этапа 02 |
+| MCP разработки | настроенные инструменты, когда активны | обязательный OCR connector не нужен | `INHERITED`, без зависимости | без локального MCP |
+| Product MCP | отсутствует | будущий интерфейс поверх Core | позднее `PROJECT_ONLY` | этап 07; не bootstrap |
+| Codex config/rules | workspace/global | тонкие локальные инварианты | `EXTEND` | `AGENTS.md`; без `.codex/config.toml` |
 
-## Context budget decision
+## Решение по бюджету контекста
 
-Keep the global SessionStart payload unchanged. Task-specific routing lives in project `AGENTS.md`; current stage reads one prompt, affected SPEC sections/contracts/tests and compact status. Do not auto-load all decisions, security, roadmap, fixtures or logs.
+Сохранить глобальную нагрузку SessionStart без изменений. Маршрутизация по задаче находится в проектном `AGENTS.md`; текущий этап читает один prompt, затрагиваемые разделы SPEC, contracts и tests и компактный status. Не загружать автоматически все decisions, security, roadmap, fixtures или logs.
 
-## Re-evaluation triggers
+## Условия повторной оценки
 
-- Promote benchmark/golden validation to a local Skill or hook only after repeat use shows a stable procedure or an enforcement gap.
-- Add project agent only when an OCR/HTR responsibility cannot be covered by existing roles plus repository context.
-- Add product MCP only after application use cases and authorization/privacy gates exist.
+- Переносить проверку benchmark/golden в локальный Skill или hook только после того, как повторное использование покажет стабильную процедуру или пробел enforcement.
+- Добавлять проектного agent только тогда, когда ответственность OCR/HTR нельзя покрыть существующими ролями и контекстом репозитория.
+- Добавлять product MCP только после появления application use cases и проверок authorization/privacy.

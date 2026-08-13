@@ -1,34 +1,34 @@
-# AI status
+# Состояние проекта для AI
 
-**Updated:** 2026-08-13
+**Обновлено:** 2026-08-13
 
-**Phase:** architecture/design bootstrap complete; implementation not started.
+**Этап:** bootstrap архитектуры и дизайна завершён; реализация не начата.
 
-**Branch:** `docs/project-skeleton`.
+**Ветка:** `docs/project-skeleton`.
 
-## Implemented
+## Реализовано
 
-- Standalone Git repository initialized; `origin` points to `https://github.com/ZabulaAleksey/text-recognition-core.git`.
-- Full KАРКАС created from the source SPEC: canonical requirements, architecture, API/data/integration contracts, decisions, security/testing strategy, roadmap and stage prompts.
-- Thin project `AGENTS.md` and context compatibility audit reuse the global AI Dev Team without local duplicate agents/hooks/Skills/MCP/config.
-- Stable requirement/acceptance IDs appended to the system SPEC.
+- Инициализирован самостоятельный Git-репозиторий; `origin` указывает на `https://github.com/ZabulaAleksey/text-recognition-core.git`.
+- По исходной SPEC создан полный КАРКАС: канонические требования, архитектура, контракты API, данных и интеграций, решения, стратегия безопасности и тестирования, roadmap и stage prompts.
+- Тонкий проектный `AGENTS.md` и аудит совместимости контекста переиспользуют глобальную AI Dev Team без локальных дубликатов agents, hooks, Skills, MCP и config.
+- В системную SPEC добавлены стабильные идентификаторы требований и критериев приёмки.
 
-## Not implemented
+## Не реализовано
 
-- No Python package, REST API, storage, jobs, OCR/HTR engine, adapters or UI exists.
-- No OCR/HTR engine has been selected; selection requires the Stage 02 golden benchmark.
-- Remote deployment is not allowed until its security decisions/gates are complete; local REST is loopback/local-credential only.
+- Отсутствуют пакет Python, REST API, хранилище, jobs, OCR/HTR-engine, adapters и UI.
+- OCR/HTR-engine ещё не выбран; для выбора требуется golden benchmark этапа 02.
+- Удалённое развёртывание запрещено до завершения соответствующих решений и проверок безопасности; локальный REST ограничен loopback и локальными учётными данными.
 
-## Known questions / debt
+## Известные вопросы и технический долг
 
-- Golden datasets and numerical quality/performance thresholds do not yet exist.
-- PDF/image libraries, OCR baseline, HTR engine, concrete local retention/encryption and remote profile remain pending ADRs. Decoder isolation, supply-chain integrity and local-service identity are already mandatory decisions.
-- Source `Определение для Codex.md` is retained as a bootstrap brief; workspace canonical terminology is `docs/PROJECT_FRAMEWORK.md`.
+- Пока отсутствуют golden datasets и численные пороги качества и производительности.
+- Библиотеки PDF и изображений, базовый OCR, HTR-engine, конкретная локальная политика хранения и шифрования, а также удалённый профиль остаются ожидающими ADR. Изоляция декодеров, целостность supply chain и идентификация локального сервиса уже являются обязательными решениями.
+- Исходный `Определение для Codex.md` сохранён как bootstrap brief; каноническая терминология workspace находится в `docs/PROJECT_FRAMEWORK.md`.
 
-## Blockers
+## Блокеры
 
-No technical blocker for Stage 01. Because the remote repository is empty, the first publication has no merge base: after the initial KАРКАС commit a local `main` ref will point to that same commit while work remains on `docs/project-skeleton`. Push still requires explicit user permission. Later feature branches follow normal review/merge flow.
+Технических блокеров для этапа 01 нет. Поскольку удалённый репозиторий пуст, у первой публикации нет общей базы для merge: после первоначального commit КАРКАСА локальная ссылка `main` будет указывать на тот же commit, а работа останется в `docs/project-skeleton`. Push по-прежнему требует явного разрешения пользователя. Последующие feature-ветки используют обычный процесс review и merge.
 
-## Next recommended action
+## Следующее рекомендуемое действие
 
-Review the KАРКАС, then run `prompts/stage-01-foundation.md`. The bounded current slice is summarized in `docs/AI_PLAN.md`.
+Проверить КАРКАС, затем выполнить `prompts/stage-01-foundation.md`. Ограниченный текущий срез кратко описан в `docs/AI_PLAN.md`.

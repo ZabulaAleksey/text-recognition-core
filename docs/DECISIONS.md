@@ -1,89 +1,89 @@
-# Engineering decisions
+# Инженерные решения
 
-Статусы: `Accepted`, `Proposed`, `Superseded`. Дата bootstrap: 2026-08-13.
+Статусы: `Принято`, `Предложено`, `Заменено`. Дата bootstrap: 2026-08-13.
 
-## ADR-001 — Standalone repository and thin overlay
+## ADR-001 — Самостоятельный репозиторий и тонкий overlay
 
-**Status:** Accepted.
+**Статус:** принято.
 
-TRC развивается как самостоятельный Git repository. Project files содержат только domain requirements, contracts, staged plan и локальные инварианты; generic agents, hooks, Skills, Git workflow и MCP наследуются из `codex-workspace`.
+TRC развивается как самостоятельный Git repository. Файлы проекта содержат только domain requirements, contracts, staged plan и локальные инварианты; общие agents, hooks, Skills, Git workflow и MCP наследуются из `codex-workspace`.
 
-Альтернативы: хранить TRC внутри consumer; скопировать AI Dev Team. Они создают дубли pipeline/управления и нарушают границы SPEC.
+Альтернативы: хранить TRC внутри consumer или скопировать AI Dev Team. Они создают дубли pipeline и управления и нарушают границы SPEC.
 
-## ADR-002 — Python modular monolith, library-first
+## ADR-002 — Модульный монолит Python, сначала библиотека
 
-**Status:** Accepted for initial implementation.
+**Статус:** принято для первоначальной реализации.
 
-Использовать Python 3.13-compatible package с domain/application ports. Начать с embedded/offline profile; FastAPI является поздним REST adapter, а не местом business logic. Причины: Python ecosystem OCR/HTR, возможность локального inference и один Core для library/service/CLI/MCP.
+Использовать пакет, совместимый с Python 3.13, с domain/application ports. Начать с embedded/offline profile; FastAPI является поздним REST adapter, а не местом business logic. Причины: экосистема Python для OCR/HTR, возможность локального inference и единый Core для library/service/CLI/MCP.
 
-Альтернативы: service-first microservices (слишком ранняя operational complexity); Rust core (усложняет ML integrations до подтверждённого bottleneck). Rust/WASM остаются extension paths после profiling.
+Альтернативы: microservices с service-first подходом создают слишком раннюю operational complexity; Rust core усложняет ML integrations до подтверждения bottleneck. Rust/WASM остаются путями расширения после profiling.
 
-Python 3.13 — стабильная поддерживаемая линия по официальной документации: <https://docs.python.org/3.13/>.
+Python 3.13 является стабильной поддерживаемой линией согласно официальной документации: <https://docs.python.org/3.13/>.
 
-## ADR-003 — Typed contracts and generated schemas
+## ADR-003 — Типизированные контракты и генерируемые схемы
 
-**Status:** Accepted.
+**Статус:** принято.
 
-Domain types остаются framework-neutral; Pydantic v2 применяется на validation/serialization boundaries с strict configuration, `extra='forbid'` для v1 requests и generated JSON Schema. FastAPI генерирует OpenAPI из тех же transport models. Не вести ручную вторую OpenAPI/DTO truth.
+Domain types остаются независимыми от фреймворка; Pydantic v2 применяется на границах validation/serialization со strict configuration, `extra='forbid'` для requests v1 и сгенерированной JSON Schema. FastAPI генерирует OpenAPI из тех же transport models. Запрещено вручную поддерживать второй источник истины OpenAPI/DTO.
 
-Pydantic документирует typed validation и JSON Schema generation: <https://docs.pydantic.dev/latest/concepts/models/> и <https://docs.pydantic.dev/latest/concepts/json_schema/>. FastAPI использует type declarations/OpenAPI: <https://fastapi.tiangolo.com/features/>.
+Pydantic документирует typed validation и генерацию JSON Schema: <https://docs.pydantic.dev/latest/concepts/models/> и <https://docs.pydantic.dev/latest/concepts/json_schema/>. FastAPI использует объявления типов и OpenAPI: <https://fastapi.tiangolo.com/features/>.
 
-## ADR-004 — Normalized original-page coordinates
+## ADR-004 — Нормализованные координаты исходной страницы
 
-**Status:** Accepted.
+**Статус:** принято.
 
-Public model использует normalized `[0,1]` coordinates with top-left origin, при этом Page хранит original pixel dimensions. Preprocessing хранит reversible transforms. Это делает contracts независимыми от engine resolution и сохраняет overlay mapping.
+Публичная модель использует нормализованные координаты `[0,1]` с началом в левом верхнем углу, при этом Page хранит исходные размеры в пикселях. Preprocessing сохраняет обратимые transforms. Это делает contracts независимыми от resolution engine и сохраняет overlay mapping.
 
-Альтернатива pixel-only привязывает результат к derived images; normalized-only без dimensions затрудняет точный rendering.
+Альтернатива только в пикселях привязывает результат к производным изображениям; только нормализованные координаты без dimensions затрудняют точный rendering.
 
-## ADR-005 — Immutable evidence, append-only linear revisions
+## ADR-005 — Неизменяемые доказательства и append-only линейные revisions
 
-**Status:** Accepted for MVP.
+**Статус:** принято для MVP.
 
-Raw snapshots append-only. Corrections reference `base_revision_id`; each accepted correction appends a revision under optimistic concurrency. Split/merge/rerun uses ancestry links. Linear history reduces ambiguity; branching/merge is deferred.
+Raw snapshots являются append-only. Corrections ссылаются на `base_revision_id`; каждое принятое исправление добавляет revision с optimistic concurrency. Split/merge/rerun использует ancestry links. Линейная история уменьшает неоднозначность; branching/merge отложены.
 
-## ADR-006 — Initial local persistence profile
+## ADR-006 — Первоначальный профиль локального хранения
 
-**Status:** Accepted for Stage 04.
+**Статус:** принято для этапа 04.
 
-Первый adapter: SQLite metadata + atomic filesystem/content-addressed blobs + persistent local worker. Storage remains behind ports. PostgreSQL/object storage/external queue require remote deployment evidence and migration ADR.
+Первый adapter: metadata SQLite, атомарные content-addressed blobs файловой системы и постоянный local worker. Storage остаётся за ports. PostgreSQL, object storage и external queue требуют подтверждённой потребности remote deployment и отдельного ADR миграции.
 
-## ADR-007 — Engine choice is evidence-gated
+## ADR-007 — Выбор engine только по подтверждениям
 
-**Status:** Proposed; decision gate in Stage 02.
+**Статус:** предложено; решение принимается на этапе 02.
 
-Compare at least Tesseract and PaddleOCR-compatible local candidates on approved Ukrainian/Russian/English printed golden data. Evaluate quality (CER/WER/layout), license, offline support, CPU memory/latency, packaging and hostile-input surface. Enable exactly one baseline OCR adapter. HTR engine is contract-only until its own representative benchmark.
+Сравнить как минимум локальные варианты, совместимые с Tesseract и PaddleOCR, на одобренных печатных golden data на украинском, русском и английском языках. Оценить качество CER/WER/layout, license, offline support, CPU memory/latency, packaging и поверхность вредоносного ввода. Включить ровно один базовый OCR adapter. HTR engine остаётся только контрактом до собственного репрезентативного benchmark.
 
-No engine receives architectural privilege before this gate.
+До этой проверки ни один engine не получает архитектурной привилегии.
 
-## ADR-008 — Application adapters live outside Core domain
+## ADR-008 — Adapters приложений находятся вне домена Core
 
-**Status:** Accepted.
+**Статус:** принято.
 
-Integration has two contracts: consumer input profile/hints and output projector. Chronicle/receipt/tutor entities live in integration packages or consumer repos; Core only exposes recognition concepts and provenance.
+Интеграция имеет два контракта: input profile/hints consumer и output projector. Сущности Chronicle/Receipt/Tutor находятся в integration packages или репозиториях consumers; Core предоставляет только понятия распознавания и provenance.
 
-## ADR-009 — Remote mode is gated
+## ADR-009 — Remote mode требует отдельного допуска
 
-**Status:** Accepted.
+**Статус:** принято.
 
-`LOCAL_ONLY`/embedded profile may be implemented first. Remote deployment is blocked until authentication, authorization, tenant isolation, encryption/retention, rate limiting, audit and incident logging decisions exist. This prevents an interface goal from silently widening the trust boundary.
+Сначала разрешено реализовать `LOCAL_ONLY`/embedded profile. Remote deployment заблокирован до появления решений об authentication, authorization, tenant isolation, encryption/retention, rate limiting, audit и incident logging. Это не позволяет цели интерфейса скрыто расширить границу доверия.
 
-## ADR-010 — Untrusted processing isolation and artifact integrity
+## ADR-010 — Изоляция недоверенной обработки и целостность артефактов
 
-**Status:** Accepted.
+**Статус:** принято.
 
-Binary decoding, metadata parsing and OCR/model inference must run in disposable least-privilege workers with network denial, private per-job roots, OS limits and hard-kill cleanup. Dependencies are hash-locked and scanned from Stage 01; model/engine artifacts require verified digests/signatures. Executable/object deserialization is forbidden without a separate sandboxed conversion decision.
+Декодирование binary, parsing metadata и inference OCR/model должны выполняться в одноразовых workers с минимальными правами, запретом сети, приватными per-job roots, OS limits и очисткой после hard kill. Начиная с этапа 01 dependencies закрепляются hashes и сканируются; артефакты model/engine требуют проверенных digests/signatures. Исполняемая и объектная десериализация запрещена без отдельного решения о sandboxed conversion.
 
-## ADR-011 — Local service identity boundary
+## ADR-011 — Граница идентификации локального сервиса
 
-**Status:** Accepted.
+**Статус:** принято.
 
-Local REST defaults to loopback/local IPC and authenticates a generated high-entropy bearer token or verified OS peer credentials. Token bootstrap uses a private permission-checked file or OS credential store, never CLI arguments or loggable environment output; verification is constant-time and rotation/revocation invalidates old tokens. Startup fails closed without secure storage. CORS is deny-all and cookie auth is absent. Non-loopback bind is a remote profile and cannot be enabled by a convenient flag alone.
+Локальный REST по умолчанию использует loopback/local IPC и аутентифицирует сгенерированный bearer token высокой энтропии или проверенные OS peer credentials. Bootstrap token использует приватный файл с проверенными permissions или OS credential store, но не аргументы CLI или environment output, который может попасть в logs; проверка выполняется за постоянное время, а rotation/revocation инвалидирует старые tokens. При отсутствии безопасного storage запуск завершается закрытым отказом. CORS полностью запрещён, cookie auth отсутствует. Non-loopback bind является remote profile и не может включаться одним удобным флагом.
 
-## Pending decisions
+## Ожидающие решения
 
-- `ADR-P01`: PDF/image decoding libraries after security/license/resource spike.
-- `ADR-P02`: baseline OCR engine after Stage 02 benchmark.
-- `ADR-P03`: concrete retention/deletion/encryption/observability policy for the local persistence profile; must be accepted before Stage 04 writes persistent user data.
-- `ADR-P04`: numerical review thresholds and release performance budgets from baseline results.
-- `ADR-P05`: HTR engine and GPU policy after a representative handwriting dataset exists.
+- `ADR-P01`: библиотеки декодирования PDF/image после исследования security/license/resources.
+- `ADR-P02`: базовый OCR engine после benchmark этапа 02.
+- `ADR-P03`: конкретная политика retention/deletion/encryption/observability для локального persistence profile; должна быть принята до записи постоянных пользовательских данных на этапе 04.
+- `ADR-P04`: численные пороги review и performance budgets релиза по результатам baseline.
+- `ADR-P05`: HTR engine и GPU policy после появления репрезентативного handwriting dataset.

@@ -1,4 +1,4 @@
-# Python and test caches (runtime starts in later stages)
+# Кэши Python и тестов (runtime появится на последующих этапах)
 __pycache__/
 *.py[cod]
 .pytest_cache/
@@ -6,19 +6,19 @@ __pycache__/
 .ruff_cache/
 .venv/
 
-# Local configuration and secrets
+# Локальная конфигурация и секреты
 .env
 .env.*
 !.env.example
 
-# Generated recognition data, models, benchmarks and private fixtures
+# Сгенерированные данные распознавания, модели, benchmarks и приватные fixtures
 /data/
 /models/
 /artifacts/
 /benchmark-results/
 /tests/fixtures/private/
 
-# Editors and operating systems
+# Редакторы и операционные системы
 .idea/
 .vscode/
 .DS_Store

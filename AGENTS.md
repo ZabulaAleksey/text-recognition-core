@@ -1,4 +1,4 @@
-# Text Recognition Core project overlay
+# Проектный overlay Text Recognition Core
 
 Наследуй общие правила из `~/codex-workspace/AGENTS.md`. Этот файл добавляет только инварианты TRC.
 

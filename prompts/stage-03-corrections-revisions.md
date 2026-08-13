@@ -1,59 +1,59 @@
-# Stage 03 — Corrections, revisions and partial rerun
+# Этап 03 — Corrections, revisions и частичный повторный запуск
 
-## Goal
+## Цель
 
-Implement append-only human correction and deterministic revision behavior without mutating recognition evidence.
+Реализовать append-only пользовательские исправления и детерминированное поведение revisions без изменения доказательств распознавания.
 
-## Required context
+## Обязательный контекст
 
-SPEC sections 17–23, 55–57 and `FR-004`–`FR-006`, `AC-003`; correction flow in architecture; API CorrectionRequest; data model identity/revision invariants; ADR-005.
+Разделы SPEC 17–23, 55–57 и `FR-004`–`FR-006`, `AC-003`; поток corrections в архитектуре; `CorrectionRequest` из API; инварианты identity/revision модели данных; ADR-005.
 
-## Dependencies
+## Зависимости
 
-Stages 01–02 accepted; raw snapshots and region recognition ports available.
+Приняты этапы 01–02; доступны raw snapshots и ports распознавания regions.
 
-## Scope
+## Область
 
-Correction operations, target validation, optimistic linear revisions, replay/current view/diff/rollback, split/merge ancestry and scoped re-recognition orchestration using in-memory repositories first.
+Операции corrections, validation target, оптимистичные линейные revisions, replay/current view/diff/rollback, ancestry split/merge и orchestration повторного распознавания scope сначала с in-memory repositories.
 
-## Tasks
+## Задачи
 
-1. Implement typed correction operations and before/base validation.
-2. Append revisions atomically through a unit-of-work port; reject stale bases.
-3. Implement deterministic replay, current projection, structural/text diff and rollback-as-new-revision.
-4. Preserve/derive IDs for replace/split/merge and maintain ancestry.
-5. Make partial rerun append raw evidence and a revision without overwriting earlier results.
-6. Derive actor/tenant/source from trusted route/service execution context; public corrections are always `USER`, reject source-role spoofing/cross-document target and keep claimed import attribution untrusted.
-7. Add immutable purpose/scope/policy-versioned consent grants and revocations separate from corrections; export re-authorizes at execution.
+1. Реализовать типизированные операции corrections и validation before/base.
+2. Атомарно добавлять revisions через port unit-of-work; отклонять устаревшие bases.
+3. Реализовать детерминированные replay, current projection, структурный и текстовый diff и rollback как новую revision.
+4. Сохранять или создавать IDs для replace/split/merge и поддерживать ancestry.
+5. При partial rerun добавлять raw evidence и revision без перезаписи предыдущих results.
+6. Получать actor/tenant/source из доверенного execution context route/service; публичные corrections всегда имеют `USER`, подмена source role и cross-document target отклоняется, заявленная import attribution остаётся недоверенной.
+7. Добавить отдельные от corrections неизменяемые grants и revocations consent, версионированные по purpose/scope/policy; export повторно авторизуется при выполнении.
 
-## Files allowed to change
+## Файлы, которые разрешено изменять
 
-Domain/application correction/revision modules, in-memory repositories, relevant schemas and unit/property/integration tests; factual docs.
+Domain/application modules corrections/revisions, in-memory repositories, относящиеся schemas и unit/property/integration tests; фактическая документация.
 
-## Files that should not change
+## Файлы, которые не должны изменяться
 
-Engine vendor adapter unless a contract bug is proven; persistent DB/REST; application projectors; raw snapshot update semantics.
+Vendor adapter engine, если не доказан дефект контракта; persistent DB/REST; application projectors; семантика обновления raw snapshot.
 
-## Tests
+## Тесты
 
-All correction operations, replay determinism, raw hash preservation, stale/concurrent base, rollback, diff, split/merge ancestry, partial rerun, spoofed actor/source role/cross-document target and omitted/forged/stale/revoked consent.
+Все операции corrections, детерминированность replay, сохранение raw hash, устаревшая и конкурентная base, rollback, diff, ancestry split/merge, partial rerun, подмена actor/source role/cross-document target и отсутствующий, поддельный, устаревший или отозванный consent.
 
-## Quality gates
+## Контроль качества
 
-`AC-003`; property/replay/concurrency tests; reviewer verifies no mutation path to raw evidence and no offset-only targets.
+`AC-003`; property/replay/concurrency tests; reviewer подтверждает отсутствие пути изменения raw evidence и targets, основанных только на offsets.
 
-## Definition of Done
+## Определение готовности
 
-Users can correct/confirm a token or line, inspect revisions/diff, roll back and rerun a scope while every prior raw/revision remains addressable and actor/consent provenance remains trusted/auditable.
+Пользователь может исправить или подтвердить token или line, просмотреть revisions и diff, выполнить rollback и повторно распознать scope, при этом все предыдущие raw/revisions остаются доступными, а provenance actor/consent — доверенным и пригодным для аудита.
 
-## Acceptance Criteria
+## Критерии приёмки
 
-Raw hash is unchanged; replay hash is stable; stale base is explicit; new structural IDs link to ancestry; training/export use requires a valid revocable grant and remains opt-in.
+Raw hash не изменяется; hash replay стабилен; устаревшая base сообщается явно; новые структурные IDs связаны с ancestry; использование для training/export требует действующий отзываемый grant и остаётся opt-in.
 
-## Expected artifacts
+## Ожидаемые артефакты
 
-Correction/revision services and schemas, in-memory implementation, replay/property tests and updated status/log.
+Services и schemas corrections/revisions, in-memory implementation, replay/property tests и обновлённые status/log.
 
-## Failure / rollback conditions
+## Условия остановки и отката
 
-Stop on nondeterministic replay, ambiguous target identity, lost concurrent update or any raw overwrite. Revert the stage commit; no persistent migration exists yet.
+Остановиться при недетерминированном replay, неоднозначной target identity, потерянном конкурентном обновлении или любой перезаписи raw. Отменить commit этапа; persistent migration ещё не существует.

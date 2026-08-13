@@ -1,27 +1,27 @@
-# Current executable slice — Stage 01
+# Текущий исполняемый срез — этап 01
 
-**State:** ready, not started. Execute only after user accepts the KАРКАС and asks to begin Stage 01.
+**Состояние:** готов, не начат. Выполнять только после принятия пользователем КАРКАСА и прямого запроса начать этап 01.
 
-## Goal
+## Цель
 
-Create the library-first Python foundation and typed framework-neutral contracts without integrating a real OCR engine, REST, database or queue.
+Создать ориентированный на библиотечное использование фундамент Python и типизированные, не зависящие от фреймворка контракты без интеграции реального OCR-engine, REST, базы данных или очереди.
 
-## Requirement scope
+## Охватываемые требования
 
 `FR-001`, `FR-002`, `FR-010`, `NFR-002`, `NFR-005`, `SEC-009`, `AC-001`, `AC-010`.
 
-## Planned file areas
+## Планируемые области файлов
 
-- packaging/configuration;
+- упаковка и конфигурация;
 - `src/text_recognition_core/domain/`;
-- `src/text_recognition_core/application/` ports/use-case boundaries;
-- `src/text_recognition_core/schemas/` generated boundary schemas;
+- ports и границы use cases в `src/text_recognition_core/application/`;
+- сгенерированные граничные схемы в `src/text_recognition_core/schemas/`;
 - `tests/unit/`, `tests/contracts/schema/`.
 
-## Gates
+## Обязательные проверки
 
-Follow `prompts/stage-01-foundation.md`. Tests must prove strict validation including container/cardinality boundaries, hierarchy/coordinate/confidence invariants, generated schema consistency, forbidden infrastructure imports, hash-locked dependency integrity and unsafe-deserialization denial. Update this plan/status only with factual results.
+Следовать `prompts/stage-01-foundation.md`. Тесты должны доказать строгую валидацию, включая ограничения контейнеров и кардинальности, инварианты иерархии, координат и confidence, согласованность сгенерированных схем, запрет инфраструктурных импортов, целостность зависимостей с закреплёнными хешами и запрет небезопасной десериализации. Обновлять этот план и статус только по фактическим результатам.
 
-## Rollback
+## Откат
 
-Revert the Stage 01 commit; no migrations or external state are permitted in this slice.
+Отменить commit этапа 01; миграции и внешнее состояние в этом срезе запрещены.

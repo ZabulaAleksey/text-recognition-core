@@ -1,80 +1,80 @@
-# Security and privacy model
+# Модель безопасности и приватности
 
-**Risk level:** high. TRC accepts hostile binary input and may process diaries, student work, documents and financial data. This model applies before any remote exposure.
+**Уровень риска:** высокий. TRC принимает потенциально вредоносный бинарный ввод и может обрабатывать дневники, работы учеников, документы и финансовые данные. Эта модель действует до любого открытия удалённого доступа.
 
-## Assets
+## Защищаемые активы
 
-- original images/PDFs and derived image artifacts;
-- recognized text, alternatives and coordinates;
-- corrections, author identity and revision history;
-- encryption/auth credentials and engine credentials;
-- model artifacts, configuration and provenance;
-- availability of CPU/GPU/memory/storage/worker capacity.
+- исходные изображения и PDF, а также производные графические артефакты;
+- распознанный текст, alternatives и координаты;
+- corrections, идентичность автора и история revisions;
+- учётные данные шифрования, auth и engines;
+- артефакты моделей, конфигурация и provenance;
+- доступность CPU, GPU, памяти, хранилища и workers.
 
-## Trust boundaries
+## Границы доверия
 
 ```text
-untrusted client/file
+недоверенный client/file
   → intake sandbox/validator
   → application/domain
-  → local or remote engine adapter
+  → local или remote engine adapter
   → storage/job/telemetry adapters
 ```
 
-Every engine, decoder, metadata parser, archive/PDF library and remote service is a separate boundary. A privacy mode is an enforced policy propagated through the complete job, not a UI hint.
+Каждый engine, decoder, metadata parser, библиотека archive/PDF и удалённый сервис образуют отдельную границу. Privacy mode является принудительно применяемой политикой, проходящей через весь job, а не подсказкой UI.
 
-## Threats and controls
+## Угрозы и средства защиты
 
-| Threat | Minimum control | Verification |
+| Угроза | Минимальная защита | Проверка |
 |---|---|---|
-| request/output/storage amplification | preflight request/JSON limits plus decoded pixels, regions/tokens/alternatives/text, artifacts/temp/persistent bytes, queued/per-principal quotas | aggregate/nested/output/disk negative tests |
-| oversized image/PDF, decompression bomb | preflight and streaming limits on bytes/pages/pixels/depth; process budget | negative resource tests |
-| malformed parser input / decoder RCE | disposable least-privilege subprocess/sandbox, no network, private temp root, OS caps, hard kill/cleanup | corpus fuzzing, crash/hang/cleanup tests |
-| path traversal/symlink/temp race | opaque source IDs, canonicalized allowlisted storage roots, private random temp dirs, atomic writes | traversal/symlink tests |
-| SSRF/unauthorized egress | no client URLs; approved scheme/host/port, resolved-IP policy, no redirects/proxies/caller auth headers; deny loopback/private/link-local/metadata and network in `LOCAL_ONLY` | no-egress, DNS/redirect rebinding tests |
-| resource exhaustion/API abuse | quotas, concurrency/memory/time limits, cancellation, bounded retries, remote rate limits | load/abuse tests |
-| tenant/user data disclosure | authorization per document/job/revision, tenant-scoped keys/storage/cache | cross-tenant negative tests before remote mode |
-| logs/traces leak text/path | structured allowlist fields, redaction, safe errors, content-free metrics | canary leakage scan |
-| poisoned model/dependency | pinned hashes/lockfile, trusted registry, signature/hash verification, SBOM/scanning | CI provenance checks |
-| correction/dataset consent abuse | trusted actor context; immutable purpose/scope/policy-versioned consent grant + revocation; execution-time export authorization | forged/stale/revoked consent tests |
-| cache/idempotency leakage | tenant/principal/operation/request/privacy/schema/pipeline/exact artifact digest scope; authorize every lookup | isolation/collision/deletion tests |
+| усиление объёма request/output/storage | предварительные лимиты request/JSON, а также decoded pixels, regions/tokens/alternatives/text, artifacts/temp/persistent bytes и quotas очереди и пользователя | негативные тесты aggregate/nested/output/disk |
+| слишком большое изображение/PDF, decompression bomb | предварительные и потоковые ограничения bytes/pages/pixels/depth; процессный бюджет | негативные resource tests |
+| повреждённый ввод parser / decoder RCE | одноразовый subprocess/sandbox с минимальными правами, без сети, с приватным temp root, OS limits и принудительным завершением и очисткой | corpus fuzzing, тесты crash/hang/cleanup |
+| path traversal, symlink или temp race | непрозрачные source IDs, канонизированные allowlisted storage roots, приватные случайные temp dirs и атомарная запись | traversal/symlink tests |
+| SSRF или неразрешённый egress | отсутствие client URLs; разрешённые scheme/host/port, политика resolved IP, запрет redirects/proxies/caller auth headers; запрет loopback/private/link-local/metadata и сети в `LOCAL_ONLY` | no-egress и DNS/redirect rebinding tests |
+| исчерпание ресурсов и злоупотребление API | quotas, ограничения concurrency/memory/time, отмена, ограниченные retries и remote rate limits | load/abuse tests |
+| раскрытие данных tenant/user | авторизация на каждый document/job/revision, tenant-scoped keys/storage/cache | cross-tenant негативные тесты до remote mode |
+| утечка текста или путей через logs/traces | структурированные allowlist fields, redaction, безопасные ошибки и метрики без содержимого | поиск canary-утечек |
+| отравленная модель или dependency | закреплённые hashes/lockfile, доверенный registry, проверка signature/hash, SBOM и scanning | проверки provenance в CI |
+| злоупотребление corrections или согласием на dataset | доверенный actor context; неизменяемое, версионированное по purpose/scope/policy разрешение с revocation; авторизация export во время выполнения | тесты forged/stale/revoked consent |
+| утечка cache/idempotency | scope по tenant/principal/operation/request/privacy/schema/pipeline и точному digest артефакта; авторизация каждого lookup | тесты isolation/collision/deletion |
 
-## Privacy modes
+## Режимы приватности
 
-- `LOCAL_ONLY`: local engines/storage only; network egress disabled for workers, fallbacks, telemetry and update checks. Failure to satisfy policy returns `PRIVACY_MODE_VIOLATION`.
-- `HYBRID`: only explicitly allowed stages may call approved endpoints; consent/configuration records destination and data class.
-- `REMOTE_ALLOWED`: still requires authorization, TLS, minimization, retention and provider policy; it is not blanket consent for training.
+- `LOCAL_ONLY`: только локальные engines и storage; network egress отключён для workers, fallbacks, telemetry и проверки обновлений. Невозможность соблюсти политику возвращает `PRIVACY_MODE_VIOLATION`.
+- `HYBRID`: только явно разрешённые этапы могут обращаться к утверждённым endpoints; consent/configuration фиксируют destination и класс данных.
+- `REMOTE_ALLOWED`: по-прежнему требуются authorization, TLS, minimization, retention и provider policy; режим не является общим согласием на обучение.
 
-Training/dataset participation is separate from processing and defaults false in all modes.
+Участие в training/dataset отделено от обработки и по умолчанию выключено во всех режимах.
 
-## Resource-limit contract
+## Контракт ограничения ресурсов
 
-Before parsing: upload/body bytes, JSON depth/container/string/cardinality, file MIME/magic and page count when safely available. During processing and before serialization/persistence: total decoded pixels, dimensions, nesting/decompression ratio, regions/tokens/alternatives/text, derived/temp/persistent bytes, queued jobs, per-principal usage, memory, wall/CPU time, artifacts and concurrency. Limits are configurable but have safe non-zero defaults; disabling a limit requires an explicit deployment decision.
+До parsing проверяются: bytes upload/body, глубина JSON, размеры container/string/cardinality, MIME/magic файла и количество страниц, если его можно безопасно определить. Во время обработки и до serialization/persistence проверяются: суммарное число decoded pixels, dimensions, nesting/decompression ratio, regions/tokens/alternatives/text, derived/temp/persistent bytes, queued jobs, per-principal usage, память, wall/CPU time, artifacts и concurrency. Ограничения настраиваются, но имеют безопасные ненулевые defaults; отключение лимита требует явного deployment-решения.
 
-## Storage and deletion
+## Хранение и удаление
 
-- originals/raw/corrections/revisions/cache/exports/logs/traces/audit have separate retention classes and bounded cardinality;
-- sensitive blobs require OS permissions; encryption at rest is mandatory before remote/multi-user profile;
-- secrets stay outside source/config docs and are never logged;
-- deletion is authorized, auditable and invalidates cache/exports according to policy;
-- backups and export copies must follow the same deletion/retention contract.
+- originals/raw/corrections/revisions/cache/exports/logs/traces/audit имеют отдельные retention classes и ограниченную кардинальность;
+- чувствительные blobs требуют OS permissions; encryption at rest обязателен до remote или multi-user profile;
+- секреты находятся вне исходного кода и конфигурационных документов и никогда не записываются в logs;
+- удаление авторизуется, аудируется и инвалидирует cache/exports согласно политике;
+- backups и копии export подчиняются тому же контракту deletion/retention.
 
-Before Stage 04 persists data, ADR-P03 must define default retention, local permissions/encryption decision, deletion SLA, shared-blob reference handling, temp/crash cleanup, rotations and backup/export deletion. Observability access and exporters are allowlisted; exception/vendor payloads and control characters are sanitized.
+До сохранения данных на этапе 04 ADR-P03 должен определить default retention, решение о локальных permissions/encryption, SLA удаления, обработку ссылок shared blobs, очистку temp/crash, rotations и удаление backup/export. Доступ к observability и exporters задаётся allowlist; содержимое exceptions/vendor payloads и управляющие символы очищаются.
 
-## Local service gate
+## Проверка локального сервиса
 
-The local REST adapter binds loopback/local IPC only by default, authenticates a generated high-entropy bearer token or verified OS peer credentials, denies CORS and does not use cookie sessions. Token bootstrap uses an OS credential store or a private permission-checked file, never CLI arguments or loggable environment output; verification is constant-time, rotation/revocation invalidates old tokens, and startup fails closed when secure storage cannot be established. Startup refuses wildcard/non-loopback without the complete remote gate. Tests cover token-file permissions, bootstrap/rotation/revocation/redaction, wrong/missing credentials, hostile Origin and wildcard bind refusal.
+Локальный REST adapter по умолчанию выполняет bind только на loopback или local IPC, аутентифицирует сгенерированный bearer token высокой энтропии или проверенные OS peer credentials, запрещает CORS и не использует cookie sessions. Bootstrap token использует OS credential store или приватный файл с проверенными permissions, но не аргументы CLI или выводимые в logs environment values; проверка выполняется за постоянное время, rotation/revocation инвалидирует старые tokens, а при невозможности безопасного хранения запуск завершается закрытым отказом. Без полного remote gate запуск с wildcard или non-loopback запрещён. Тесты покрывают permissions token-file, bootstrap/rotation/revocation/redaction, неверные и отсутствующие credentials, hostile Origin и отказ wildcard bind.
 
-## Network service gate
+## Проверка сетевого сервиса
 
-Do not expose remote REST/MCP until authentication, authorization, tenant isolation, TLS, rate limiting, audit, retention/encryption and incident response are specified and negatively tested. Stack traces and internal paths never cross the API boundary.
+Не открывать remote REST/MCP до определения и негативного тестирования authentication, authorization, tenant isolation, TLS, rate limiting, audit, retention/encryption и incident response. Stack traces и внутренние пути никогда не пересекают границу API.
 
-Remote engine adapters additionally prohibit caller-controlled URLs, proxy/auth headers and redirects by default. Approved endpoints are allowlisted by scheme/host/port; every resolution/connection rejects loopback, private, link-local and metadata ranges and resists DNS rebinding.
+Remote engine adapters дополнительно по умолчанию запрещают управляемые вызывающей стороной URLs, proxy/auth headers и redirects. Разрешённые endpoints задаются allowlist по scheme/host/port; каждое разрешение имени и соединение отклоняет loopback, private, link-local и metadata ranges и защищается от DNS rebinding.
 
-## Security quality gate
+## Контроль качества безопасности
 
-Any change touching input parsers, network, storage, auth, privacy mode, logging, export, engines/models or resource limits requires `SEC-*` traceability, negative tests, dependency/security scan and security review. From Stage 01, dependencies are hash-locked to trusted indexes with SBOM/license/vulnerability checks. Engine/model artifacts require signed or digest-verified manifests before loading. Pickle/joblib, unrestricted `torch.load`, unsafe YAML and other executable/object deserialization are forbidden unless a separate sandboxed conversion ADR proves necessity. Real private documents may not be committed to the public repository.
+Любое изменение parsers входа, сети, storage, auth, privacy mode, logging, export, engines/models или resource limits требует трассировки `SEC-*`, негативных тестов, сканирования dependency/security и security review. Начиная с этапа 01 зависимости фиксируются hashes для доверенных indexes и проверяются через SBOM, license и vulnerability checks. Артефакты engine/model до загрузки требуют подписанные или проверенные по digest manifests. Pickle/joblib, unrestricted `torch.load`, unsafe YAML и другая исполняемая или объектная десериализация запрещены, если отдельный ADR о sandboxed conversion не докажет её необходимость. Реальные приватные документы запрещено коммитить в публичный репозиторий.
 
-## Incident-safe observability
+## Безопасная при инцидентах observability
 
-Allowed defaults: opaque correlation/job/engine IDs, durations, counts, status/error code, resource totals and bucketed confidence. Disallowed defaults: recognized text, alternatives, images, raw metadata, local source paths, author text and tokens/secrets.
+По умолчанию разрешены: непрозрачные correlation/job/engine IDs, durations, counts, status/error code, суммарное использование ресурсов и bucketed confidence. По умолчанию запрещены: распознанный текст, alternatives, изображения, raw metadata, локальные source paths, авторский текст, tokens и secrets.
