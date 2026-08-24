@@ -23,7 +23,7 @@ Applications → stable TRC contracts → RecognitionEngine ports → engine ada
 - [`prompts/README.md`](prompts/README.md) — самостоятельные этапы для Codex.
 - [`docs/AI_STATUS.md`](docs/AI_STATUS.md) — текущее фактическое состояние.
 
-`Определение для Codex.md` сохранено как исходный bootstrap-brief. Общие для всех проектов определения КАРКАСА и АВТОМАТИЗАЦИИ КОНТЕКСТА вынесены в `~/codex-workspace/docs/PROJECT_FRAMEWORK.md`; при расхождении действуют канонические имена и каскад workspace.
+`Определение для Codex.md` сохранено как исходный bootstrap-brief. Общие для всех проектов определения КАРКАСА и АВТОМАТИЗАЦИИ КОНТЕКСТА вынесены в `~/.codex/docs/PROJECT_FRAMEWORK.md`; при расхождении действуют канонические имена и каскад workspace.
 
 ## Следующий шаг
 

@@ -1,5 +1,11 @@
 # Состояние проекта для AI
 
+## Governance migration — 2026-08-24
+
+- Шесть подробных stage-файлов полностью объединены в `prompts/STAGES.md`; project overlay — PASS.
+- Продуктовый test environment не настроен в этом repository; продуктовый код не изменялся.
+- Репозиторий находится в `~/codex-workspace/text-recognition-core`; push/merge не выполнялись.
+
 **Обновлено:** 2026-08-13
 
 **Этап:** bootstrap архитектуры и дизайна завершён; реализация не начата.
