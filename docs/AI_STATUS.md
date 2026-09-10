@@ -4,7 +4,7 @@
 
 - Шесть подробных stage-файлов полностью объединены в `prompts/STAGES.md`; project overlay — PASS.
 - Продуктовый test environment не настроен в этом repository; продуктовый код не изменялся.
-- Репозиторий находится в `~/codex-workspace/text-recognition-core`; push/merge не выполнялись.
+- Репозиторий находится в `${PROJECTS_ROOT}/text-recognition-core` (локальный default: `~/text-recognition-core`); `main` синхронизирован с `origin/main`.
 
 **Обновлено:** 2026-08-13
 
