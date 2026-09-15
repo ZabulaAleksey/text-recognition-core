@@ -11,7 +11,7 @@
 - NEXT: TRC-01-CONTRACT-AND-APPROVAL
 - Blockers: нет явного запуска Stage 01 и readable полного контракта; старый launcher повреждён и целевой файл отсутствовал до миграции.
 - USER action `TRC-01-APPROVAL`: PENDING; после review КАРКАСА явно поручить начать Stage 01; evidence — утверждённый scope/contract и команда пользователя; unlock — limited Stage 01 implementation.
-- USER action `TRC-MERGE-DOCS`: PENDING; после публикации этой документационной ветки явно разрешить merge в `main`; evidence — GitHub default-branch read-back только `docs/STAGES.md`; unlock — удаление полностью слитой ветки.
+- USER action `TRC-MERGE-DOCS`: DONE; пользователь разрешил merge `b1af28b`, fast-forward опубликован в GitHub `main`, read-back подтвердил `docs/STAGES.md` и отсутствие `prompts/STAGES.md`, `docs/AI_PLAN.md`, `docs/AI_STATUS.md`; полностью слитую ветку можно удалить.
 
 ## Поздние этапы
 
