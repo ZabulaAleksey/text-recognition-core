@@ -87,3 +87,7 @@ Raw snapshots являются append-only. Corrections ссылаются на 
 - `ADR-P03`: конкретная политика retention/deletion/encryption/observability для локального persistence profile; должна быть принята до записи постоянных пользовательских данных на этапе 04.
 - `ADR-P04`: численные пороги review и performance budgets релиза по результатам baseline.
 - `ADR-P05`: HTR engine и GPU policy после появления репрезентативного handwriting dataset.
+
+## ADR-012 — Единственный owner execution state
+
+**Статус:** принято 2026-09-15 по прямому правилу пользователя. Только `docs/STAGES.md` хранит текущий plan, status, evidence и NEXT. Подробный повреждённый исторический catalog и старые AI facts сохранены в `docs/notes/`; Stage 01 не запускать до readable contract и явной команды.

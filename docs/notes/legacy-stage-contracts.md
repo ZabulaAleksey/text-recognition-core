@@ -1,3 +1,7 @@
+# Исторический stage catalog
+
+Содержимое прежнего `prompts/STAGES.md` сохранено ниже. SHA-256 source worktree: `60922394119b7d25e9c7879d714d0b46e66ef269da3f83e6c6279f12f878bad5`. Исходный текст содержит mojibake и не является готовым launcher.
+
 # Канонические этапы text-recognition-core  Единый источник stage-prompts. Ниже сохранено полное содержание ранее существовавших этапов.
 
 ## stage-01-foundation

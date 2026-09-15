@@ -1,3 +1,7 @@
+# Исторический prompt index
+
+Содержимое прежнего `prompts/README.md` сохранено ниже. SHA-256 source worktree: `d7cce51100831ca44b5159ceea5e1cf8022f69152c72bec91b47266b2b2f63f7`. Ссылки `stage-01-foundation.md` — `stage-06-quality-hardening.md` отсутствовали уже в GitHub main перед миграцией.
+
 # Поэтапные prompts реализации
 
 Каждый файл — самостоятельный ограниченный этап для отдельной сессии Codex, review и commit. Выполнять по порядку; перед стартом сверить `docs/AI_STATUS.md`, зависимости и решения. Prompt не изменяет требования SPEC.

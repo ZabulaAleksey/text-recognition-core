@@ -20,11 +20,10 @@ Applications → stable TRC contracts → RecognitionEngine ports → engine ada
 - [`docs/SECURITY.md`](docs/SECURITY.md) — threat model и privacy/offline ограничения.
 - [`docs/TEST_STRATEGY.md`](docs/TEST_STRATEGY.md) — проверки, benchmarks и quality gates.
 - [`docs/ROADMAP.md`](docs/ROADMAP.md) — порядок развития.
-- [`prompts/README.md`](prompts/README.md) — самостоятельные этапы для Codex.
-- [`docs/AI_STATUS.md`](docs/AI_STATUS.md) — текущее фактическое состояние.
+- [`docs/STAGES.md`](docs/STAGES.md) — выбранный этап, фактическое состояние и следующий шаг.
 
 `Определение для Codex.md` сохранено как исходный bootstrap-brief. Общие для всех проектов определения КАРКАСА и АВТОМАТИЗАЦИИ КОНТЕКСТА вынесены в `~/.codex/docs/PROJECT_FRAMEWORK.md`; при расхождении действуют канонические имена и каскад workspace.
 
 ## Следующий шаг
 
-После review КАРКАСА выполнить `prompts/stage-01-foundation.md`. До явного подтверждения не выполнять merge или push.
+После review КАРКАСА явно запустить Stage 01 по `docs/STAGES.md`; повреждённый исторический launcher требует читаемого ограниченного контракта до реализации. Merge остаётся отдельным решением пользователя; push документационной ветки разрешён ранее.
