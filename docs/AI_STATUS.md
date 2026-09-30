@@ -1,5 +1,19 @@
 # Состояние проекта для AI
 
+## Текущий Stage 02 — engine routing foundation (2026-09-30)
+
+- Status: PARTIAL; pure immutable routing planner реализован и проверен локально.
+- `EngineRegistry` ограничен 32 descriptors; OCR/HTR capabilities, explicit selection,
+  deterministic rank/name order, privacy `LOCAL_ONLY`, 4096 unique region routes и
+  fail-closed errors покрыты unit tests. Ни один engine не исполняется.
+- SPEC: `specs/features/engine-routing.spec.md`; rationale ADR-013.
+- Stage 02 остаётся открытым: нет binary decoder/intake, изолированного worker,
+  golden corpus/benchmark, принятого OCR adapter и runtime end-to-end evidence.
+- Установленный Tesseract 5.5.3 с языками eng/rus/ukr/osd — только доступный
+  benchmark candidate; проектный пакет от него не зависит.
+- Current local validation: 35 tests PASS, Ruff check/format PASS, strict mypy PASS.
+
+
 ## Текущий Stage 01 — typed foundation (2026-09-30)
 
 - Status: verified locally for the Stage 01 contract; branch `feature/trc-stage-01-foundation`.

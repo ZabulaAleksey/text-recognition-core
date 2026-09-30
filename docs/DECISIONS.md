@@ -97,6 +97,20 @@ wheel smoke, 29 tests, Ruff/mypy и OSV audit 19/0. Rollback: revert Stage 01 co
 Affected stage: 01. Runtime OCR/model loaders остаются Stage 02 и не получают
 разрешения из этого решения.
 
+## ADR-013 — Детерминированный planning slice до включения OCR runtime
+
+**Статус:** принято для Stage 02 local partial, 2026-09-30.
+
+**AUTONOMOUS_DECISION.** Context: Stage 02 требует routing и fallback, но выбор OCR
+engine зависит от golden benchmark и worker isolation. Варианты: преждевременно
+подключить установленный на машине Tesseract; ждать всего runtime; или выделить
+pure immutable planner. Выбран planner: максимум 32 descriptors, явные OCR/HTR
+capabilities, стабильный rank/name порядок, `LOCAL_ONLY` до выдачи route, explicit
+selection без fallback. Это обратимо через revert, persistent state отсутствует.
+Evidence: unit/privacy/negative tests, полный suite и static checks в `docs/AI_STATUS.md`.
+Rollback: revert Stage 02 planning commit. Affected stage: 02. Установленный
+Tesseract 5.5.3 с `eng/rus/ukr/osd` — кандидат benchmark, не выбранный adapter.
+
 ## Ожидающие решения
 
 - `ADR-P01`: библиотеки декодирования PDF/image после исследования security/license/resources.

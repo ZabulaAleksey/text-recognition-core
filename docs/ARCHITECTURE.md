@@ -1,7 +1,8 @@
 # Архитектура Text Recognition Core
 
 **Статус:** Stage 01 local foundation реализует domain values/hierarchy, application ports и
-versioned boundary models. Engine, adapters, orchestration, storage и runtime ещё не реализованы.
+versioned boundary models. Stage 02 добавляет pure engine routing plan без engine execution.
+OCR adapters, binary intake, worker isolation, storage и runtime ещё не реализованы.
 Архитектура обеспечивает `specs/system.spec.md` и не утверждает их наличие в коде.
 
 ## Цели и границы

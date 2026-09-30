@@ -1,4 +1,22 @@
-# Текущий исполняемый срез — этап 01
+# Текущий исполняемый срез — этап 02, pure engine routing
+
+**Состояние:** независимый planning slice Stage 02 реализуется после локально проверенного
+Stage 01. Контракт: `specs/features/engine-routing.spec.md`. Полный Stage 02 остаётся
+открытым до worker isolation, golden benchmark и одного выбранного OCR adapter.
+
+## Задача текущего среза
+
+Сделать immutable registry descriptors и детерминированный выбор кандидатов OCR/HTR
+для регионов. `LOCAL_ONLY` исключает remote engines, явный выбор не допускает
+скрытого fallback. Планировщик не исполняет binary decoder, модель или сеть.
+
+## Проверки текущего среза
+
+Unit tests для порядка, capability/privacy отказов и маршрутизации регионов;
+полный unit/schema suite Stage 01, Ruff и strict mypy. После этого сохранится
+граница между локальным routing plan и фактическим OCR runtime.
+
+## Предыдущий завершённый срез — этап 01
 
 **Состояние:** Stage 01 verified locally в `feature/trc-stage-01-foundation` после
 прямого запроса NIGHT RUN V2. Verification evidence и следующие границы — `docs/AI_STATUS.md`.

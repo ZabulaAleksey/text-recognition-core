@@ -63,6 +63,12 @@
 
 
 ## stage-02-engine-pipeline
+Stage 02 current outcome (2026-09-30): PARTIAL. Pure immutable engine routing planner,
+privacy/capability fail-closed behavior and region planning verified locally; see
+`specs/features/engine-routing.spec.md` and `docs/AI_STATUS.md`. Binary intake,
+isolated workers, golden benchmark and baseline OCR adapter remain open. This
+bounded slice does not satisfy the complete Stage 02 acceptance contract.
+
 # Р­С‚Р°Рї 02 вЂ” Intake, pipeline Рё Р±Р°Р·РѕРІС‹Р№ OCR
 
 ## Р¦РµР»СЊ

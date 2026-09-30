@@ -73,6 +73,10 @@
 
 ## Трассировка
 
+Stage 02 planning evidence: `tests/unit/test_engine_registry.py` проверяет порядок,
+explicit selection, region mapping и fail-closed privacy/capability. Эти тесты
+не подтверждают worker isolation, engine contract или OCR quality.
+
 Stage 01 local evidence: `uv lock --check --offline`, two-step `uv sync --locked
 --no-install-project` → `uv sync --locked --no-build-isolation`, `uv run pytest`,
 `uv run ruff check src tests`, `uv run ruff format --check src tests`, `uv run mypy src`,
