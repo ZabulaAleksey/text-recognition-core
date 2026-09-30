@@ -68,6 +68,8 @@ privacy/capability fail-closed behavior and region planning verified locally; se
 `specs/features/engine-routing.spec.md` and `docs/AI_STATUS.md`. Binary intake,
 isolated workers, representative golden benchmark and baseline OCR adapter remain open. This
 bounded slice does not satisfy the complete Stage 02 acceptance contract.
+A pre-decoder bounded source-byte envelope now hashes and recognizes only leading
+PNG/JPEG/PDF signatures; binary decoding and worker isolation remain open.
 Synthetic printed golden smoke now covers eng/rus/ukr with fixed SHA-256 images and a bounded executable fingerprint,
 manifest integrity and tamper/path-negative tests. Installed Tesseract 5.5.3
 scores CER/WER 0 only on these three easy images; see

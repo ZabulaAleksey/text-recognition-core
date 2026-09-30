@@ -18,6 +18,9 @@
 
 Базовым runner является Pytest; его fixtures и параметризация поддерживают общий набор тестов adapters (<https://docs.pytest.org/en/stable/>).
 
+Stage 02 pre-decoder envelope tests validate bounded byte reads, signatures,
+SHA-256 and redacted errors; they do not count as decoder isolation or OCR E2E.
+
 ## Общий набор контрактных тестов engine
 
 Для каждого включённого adapter:

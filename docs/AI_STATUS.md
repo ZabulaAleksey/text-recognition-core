@@ -1,17 +1,20 @@
 # Состояние проекта для AI
 
-## Текущий Stage 02 — routing и synthetic golden smoke (2026-09-30)
+## Текущий Stage 02 — routing, golden smoke и byte envelope (2026-09-30)
 
+- Added a bounded pre-decoder source byte envelope: PNG/JPEG/PDF leading signatures,
+  64 MiB upper cap, streamed SHA-256, content-free failures. No decoder/worker or OCR
+  engine is activated; see `specs/features/source-byte-envelope.spec.md`.
 - Status: PARTIAL; pure immutable routing planner реализован и проверен локально.
 - `EngineRegistry` ограничен 32 descriptors; OCR/HTR capabilities, explicit selection,
   deterministic rank/name order, privacy `LOCAL_ONLY`, 4096 unique region routes и
   fail-closed errors покрыты unit tests. Ни один engine не исполняется.
 - SPEC: `specs/features/engine-routing.spec.md`; rationale ADR-013.
 - Synthetic printed golden smoke v1: три авторских PNG (eng/rus/ukr), manifest, SHA-256/dimensions и fixed-corpus Tesseract diagnostic. Digest tamper и path escape отклоняются до запуска engine. Installed Tesseract 5.5.3 scored CER/WER 0 только на этих простых samples; `docs/evidence/stage02-printed-smoke.md` фиксирует latency.
-- Stage 02 остаётся открытым: нет binary decoder/intake, изолированного worker, representative golden corpus/benchmark, принятого OCR adapter и runtime end-to-end evidence.
+- Stage 02 остаётся открытым: нет binary decoder, изолированного worker, representative golden corpus/benchmark, принятого OCR adapter и runtime end-to-end evidence.
 - Установленный Tesseract 5.5.3 с языками eng/rus/ukr/osd — только доступный
   benchmark candidate; проектный пакет от него не зависит.
-- Current local validation: 41 tests PASS via both `uv run pytest` and `uv run python -m pytest` after explicit pytest project-root import path; Ruff check/format PASS, strict mypy PASS. Restricted Windows Temp required a writable workspace `--basetemp`.
+- Current local validation: 56 tests PASS via `uv run --locked pytest`; Ruff check/format PASS, strict mypy PASS. Restricted Windows Temp required a writable workspace `--basetemp`.
 
 
 ## Текущий Stage 01 — typed foundation (2026-09-30)

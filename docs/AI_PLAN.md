@@ -1,15 +1,15 @@
-# Текущий исполняемый срез — этап 02, synthetic printed golden smoke
+# Текущий исполняемый срез — этап 02, synthetic printed golden smoke and byte envelope
 
 **Состояние:** независимый planning slice Stage 02 реализуется после локально проверенного
-Stage 01. Pure routing и bounded synthetic printed golden smoke проверены локально; контракты: `specs/features/engine-routing.spec.md` и `specs/features/printed-golden-smoke.spec.md`. Полный Stage 02 остаётся открытым до worker isolation, репрезентативного golden benchmark и одного выбранного OCR adapter.
+Stage 01. Pure routing и bounded synthetic printed golden smoke and byte envelope проверены локально; контракты: `specs/features/engine-routing.spec.md` и `specs/features/printed-golden-smoke.spec.md`. Полный Stage 02 остаётся открытым до worker isolation, репрезентативного golden benchmark и одного выбранного OCR adapter.
 
 ## Результат текущего среза
 
-Immutable registry descriptors и детерминированный OCR/HTR routing уже проверены. Добавлены три trusted synthetic printed images, manifest с digest и фиксированный local Tesseract smoke без активации production engine. Следующий Stage 02 slice требует isolated binary decoder/worker и репрезентативный golden dataset.
+Immutable registry descriptors и детерминированный OCR/HTR routing уже проверены. Добавлены три trusted synthetic printed images, manifest с digest и фиксированный local Tesseract smoke без активации production engine. Pre-decoder bounded byte envelope is verified; next Stage 02 slice requires isolated binary decoder/worker и репрезентативный golden dataset.
 
 ## Проверки текущего среза
 
-39 unit/schema/contract tests PASS, Ruff check/format и strict mypy PASS. Локальный Tesseract smoke дал CER/WER 0 на трёх простых изображениях. Это не worker-isolation и не representative quality gate.
+56 unit/schema/contract tests PASS, Ruff check/format и strict mypy PASS. Локальный Tesseract smoke дал CER/WER 0 на трёх простых изображениях. Это не worker-isolation и не representative quality gate.
 
 ## Предыдущий завершённый срез — этап 01
 

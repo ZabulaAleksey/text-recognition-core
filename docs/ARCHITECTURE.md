@@ -2,7 +2,8 @@
 
 **Статус:** Stage 01 local foundation реализует domain values/hierarchy, application ports и
 versioned boundary models. Stage 02 добавляет pure engine routing plan без engine execution.
-OCR adapters, binary intake, worker isolation, storage и runtime ещё не реализованы.
+OCR adapters, binary decoding, worker isolation, storage и runtime ещё не реализованы.
+Pre-decoder byte-envelope inspection computes a bounded digest and signature hint only.
 Архитектура обеспечивает `specs/system.spec.md` и не утверждает их наличие в коде.
 
 ## Цели и границы

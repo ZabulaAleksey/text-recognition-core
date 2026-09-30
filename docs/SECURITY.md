@@ -7,6 +7,8 @@ default; lock-aware two-step restore и offline no-build-isolation build про�
 `uv audit --locked` проверил 19 пакетов без известных находок на 2026-09-30;
 CycloneDX SBOM и license metadata — `docs/evidence/stage01-supply-chain.md`.
 Boundary parser ограничивает JSON bytes и отдаёт редактированные error codes.
+Pre-decoder byte envelope checks size, leading signature and SHA-256 without opening paths
+or parsing metadata; it does not replace decoder isolation.
 Бинарный decoder, OCR/model worker и data storage ещё отсутствуют; их security
 gates должны пройти до Stage 02 activation.
 
