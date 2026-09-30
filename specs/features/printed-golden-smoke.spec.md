@@ -12,6 +12,6 @@ Status: accepted local preparation slice; not Stage 02 engine acceptance.
 ## Acceptance and limits
 
 - Manifest integrity, unique IDs, language map, image bounds and nonempty reference are tested without Tesseract.
-- The candidate command produces a machine-readable report with per-image results and exact installed version. Nonzero engine exit, timeout, changed digest or excessive output fails visibly.
+- The candidate command produces a machine-readable report with per-image results, exact installed version and a SHA-256 fingerprint of the bounded installed executable. The digest identifies the local candidate only; it does not attest to a trusted publisher or model data. Nonzero engine exit, timeout, changed digest or excessive output fails visibly.
 - Zero error on this tiny synthetic corpus is only a smoke result. It does not select an engine, establish representative quality/performance thresholds, prove layout, worker isolation or live OCR acceptance.
 - Rollback: remove this bounded fixture/tool/test slice. No application or persisted user state changes.

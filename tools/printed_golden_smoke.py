@@ -15,6 +15,7 @@ from typing import Any
 CORPUS = Path(__file__).resolve().parents[1] / "tests/fixtures/printed_golden_v1"
 MAX_IMAGE_BYTES = 100_000
 MAX_STDOUT_BYTES = 16_384
+MAX_EXECUTABLE_BYTES = 100_000_000
 LANGUAGES = {"eng", "rus", "ukr"}
 
 
@@ -69,6 +70,25 @@ def edit_distance(left: list[str], right: list[str]) -> int:
     return previous[-1]
 
 
+def executable_sha256(executable: str) -> str:
+    """Fingerprint a bounded local candidate without reading it into memory."""
+    path = Path(executable)
+    size = path.stat().st_size
+    if not 0 < size <= MAX_EXECUTABLE_BYTES:
+        raise ValueError("engine executable size invalid")
+    digest = hashlib.sha256()
+    total = 0
+    with path.open("rb") as source:
+        while chunk := source.read(1024 * 1024):
+            total += len(chunk)
+            if total > MAX_EXECUTABLE_BYTES:
+                raise ValueError("engine executable size invalid")
+            digest.update(chunk)
+    if total != size:
+        raise ValueError("engine executable changed during read")
+    return digest.hexdigest()
+
+
 def benchmark() -> dict[str, Any]:
     samples = manifest_samples()
     executable = shutil.which("tesseract")
@@ -79,6 +99,7 @@ def benchmark() -> dict[str, Any]:
         .stdout.decode("utf-8", errors="replace")
         .splitlines()[0]
     )
+    engine_sha256 = executable_sha256(executable)
     results: list[dict[str, Any]] = []
     for sample in samples:
         start = time.monotonic()
@@ -111,7 +132,12 @@ def benchmark() -> dict[str, Any]:
                 "latency_ms": elapsed_ms,
             }
         )
-    return {"corpus": "printed_golden_smoke_v1", "engine": version, "results": results}
+    return {
+        "corpus": "printed_golden_smoke_v1",
+        "engine": version,
+        "engine_sha256": engine_sha256,
+        "results": results,
+    }
 
 
 if __name__ == "__main__":

@@ -11,7 +11,7 @@
 - Stage 02 остаётся открытым: нет binary decoder/intake, изолированного worker, representative golden corpus/benchmark, принятого OCR adapter и runtime end-to-end evidence.
 - Установленный Tesseract 5.5.3 с языками eng/rus/ukr/osd — только доступный
   benchmark candidate; проектный пакет от него не зависит.
-- Current local validation: 39 tests PASS via both `uv run pytest` and `uv run python -m pytest` after explicit pytest project-root import path; Ruff check/format PASS, strict mypy PASS. Restricted Windows Temp required a writable workspace `--basetemp`.
+- Current local validation: 41 tests PASS via both `uv run pytest` and `uv run python -m pytest` after explicit pytest project-root import path; Ruff check/format PASS, strict mypy PASS. Restricted Windows Temp required a writable workspace `--basetemp`.
 
 
 ## Текущий Stage 01 — typed foundation (2026-09-30)
