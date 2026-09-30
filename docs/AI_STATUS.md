@@ -2,6 +2,8 @@
 
 ## Текущий Stage 02 — routing, golden smoke и byte envelope (2026-09-30)
 
+- 2026-10-01: исправлен locked editable restore gap editables; fresh offline two-step restore/import PASS, 56 tests/Ruff/format/mypy/build PASS; uv audit 20 packages zero known. Фактический Python 3.13.6. Evidence: docs/notes/night-reproducibility-2026-10-01.md; OCR/decoder isolation остаются PARTIAL.
+
 - Added a bounded pre-decoder source byte envelope: PNG/JPEG/PDF leading signatures,
   64 MiB upper cap, streamed SHA-256, content-free failures. No decoder/worker or OCR
   engine is activated; see `specs/features/source-byte-envelope.spec.md`.

@@ -63,6 +63,8 @@
 
 
 ## stage-02-engine-pipeline
+
+- Night restore checkpoint 2026-10-01: PARTIAL remains; locked editable-build gap fixed via editables~=0.3 (0.6). Fresh separate-environment offline two-step restore/import PASS; 56 tests/Ruff/strict mypy/lock/wheel/sdist PASS, uv audit 20 packages zero known. Evidence: docs/notes/night-reproducibility-2026-10-01.md. NEXT remains isolated decoder contract and representative OCR benchmark, no native parser activation.
 Stage 02 current outcome (2026-09-30): PARTIAL. Pure immutable engine routing planner,
 privacy/capability fail-closed behavior and region planning verified locally; see
 `specs/features/engine-routing.spec.md` and `docs/AI_STATUS.md`. Binary intake,

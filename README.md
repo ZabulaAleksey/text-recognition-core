@@ -34,6 +34,6 @@ Applications → stable TRC contracts → RecognitionEngine ports → engine ada
 `uv run ruff check src tests`, `uv run ruff format --check src tests`, `uv run mypy src`,
 `uv lock --check --offline` и `uv audit --locked`. Offline build:
 `uv build --offline --no-build-isolation` из активной проектной `.venv`.
-На этой машине Python 3.13.7
+На этой машине Python 3.13.6
 доступен по exact interpreter path; `py -0p` его не перечисляет. Source of truth для
 статуса и открытых gates — [`docs/AI_STATUS.md`](docs/AI_STATUS.md). Merge/push не выполнялись.

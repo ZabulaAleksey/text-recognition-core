@@ -15,7 +15,13 @@ url = "https://pypi.org/simple"
 default = true
 
 [dependency-groups]
-dev = ["hatchling>=1.27,<2", "pytest>=9.0.3,<10", "ruff>=0.12,<1", "mypy>=1.17,<2"]
+dev = [
+    "hatchling>=1.27,<2",
+    "pytest>=9.0.3,<10",
+    "ruff>=0.12,<1",
+    "mypy>=1.17,<2",
+    "editables~=0.3",
+]
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/text_recognition_core"]

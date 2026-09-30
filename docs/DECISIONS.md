@@ -97,6 +97,8 @@ wheel smoke, 29 tests, Ruff/mypy и OSV audit 19/0. Rollback: revert Stage 01 co
 Affected stage: 01. Runtime OCR/model loaders остаются Stage 02 и не получают
 разрешения из этого решения.
 
+ADR-012 correction, NIGHT v3 2026-10-01: a re-materialized environment exposed Hatchling's dynamic editable dependency `editables~=0.3`, absent from the declared dev group. The documented no-build-isolation restore failed with `ModuleNotFoundError: editables`. Under existing SEC-009 / AC-010, include that build-only dependency in the same dev group and uv.lock; do not install an unlocked package as a workaround. This does not activate OCR, workers, storage or another package manager. Verification is recorded in the selected Stage 02 record after restore/tests.
+
 ## ADR-013 — Детерминированный planning slice до включения OCR runtime
 
 **Статус:** принято для Stage 02 local partial, 2026-09-30.
