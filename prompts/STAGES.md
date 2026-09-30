@@ -66,8 +66,14 @@
 Stage 02 current outcome (2026-09-30): PARTIAL. Pure immutable engine routing planner,
 privacy/capability fail-closed behavior and region planning verified locally; see
 `specs/features/engine-routing.spec.md` and `docs/AI_STATUS.md`. Binary intake,
-isolated workers, golden benchmark and baseline OCR adapter remain open. This
+isolated workers, representative golden benchmark and baseline OCR adapter remain open. This
 bounded slice does not satisfy the complete Stage 02 acceptance contract.
+Synthetic printed golden smoke now covers eng/rus/ukr with fixed SHA-256 images,
+manifest integrity and tamper/path-negative tests. Installed Tesseract 5.5.3
+scores CER/WER 0 only on these three easy images; see
+`specs/features/printed-golden-smoke.spec.md` and
+`docs/evidence/stage02-printed-smoke.md`. This does not select an OCR engine,
+establish representative thresholds or activate native parsing.
 
 # Р­С‚Р°Рї 02 вЂ” Intake, pipeline Рё Р±Р°Р·РѕРІС‹Р№ OCR
 

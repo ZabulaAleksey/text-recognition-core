@@ -73,6 +73,8 @@
 
 ## Трассировка
 
+Stage 02 printed smoke evidence: `tests/fixtures/printed_golden_v1/manifest.json` and `tests/contracts/golden/test_printed_smoke.py` prove bounded synthetic corpus integrity; `python -m tools.printed_golden_smoke` reports the installed Tesseract candidate on only those trusted fixtures. Tiny synthetic CER/WER 0 is not a representative quality or worker-isolation gate.
+
 Stage 02 planning evidence: `tests/unit/test_engine_registry.py` проверяет порядок,
 explicit selection, region mapping и fail-closed privacy/capability. Эти тесты
 не подтверждают worker isolation, engine contract или OCR quality.

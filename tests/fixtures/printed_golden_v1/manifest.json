@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "name": "printed_golden_smoke_v1",
+  "provenance": "Synthetic text authored for this repository; locally rasterized with Arial 48 at 1024x320. No private source documents or font file are distributed.",
+  "split": "golden_smoke",
+  "samples": [
+    {"id": "en-001", "file": "en.png", "language": "eng", "expected": "TOTAL 123.45\nDATE 2026-09-30\nITEM APPLE 2", "sha256": "a711d684a8112c7f852401ba9ac69e2d6d383868a7c14995459c82619c2f3743", "width": 1024, "height": 320},
+    {"id": "ru-001", "file": "ru.png", "language": "rus", "expected": "ИТОГО 123,45\nДАТА 30.09.2026\nТОВАР ЯБЛОКО", "sha256": "b4b9b9c86f6518d6e4f19f3c45ba05db17a9d83ff48c4efa4fc3d6785ff41014", "width": 1024, "height": 320},
+    {"id": "uk-001", "file": "uk.png", "language": "ukr", "expected": "РАЗОМ 123,45\nДАТА 30.09.2026\nТОВАР ЯБЛУКО", "sha256": "7d89fa6f3035b3f2923eca0852dbae202784d7c72f69652e325f5b47eccbf9a0", "width": 1024, "height": 320}
+  ]
+}

@@ -1,20 +1,15 @@
-# Текущий исполняемый срез — этап 02, pure engine routing
+# Текущий исполняемый срез — этап 02, synthetic printed golden smoke
 
 **Состояние:** независимый planning slice Stage 02 реализуется после локально проверенного
-Stage 01. Контракт: `specs/features/engine-routing.spec.md`. Полный Stage 02 остаётся
-открытым до worker isolation, golden benchmark и одного выбранного OCR adapter.
+Stage 01. Pure routing и bounded synthetic printed golden smoke проверены локально; контракты: `specs/features/engine-routing.spec.md` и `specs/features/printed-golden-smoke.spec.md`. Полный Stage 02 остаётся открытым до worker isolation, репрезентативного golden benchmark и одного выбранного OCR adapter.
 
-## Задача текущего среза
+## Результат текущего среза
 
-Сделать immutable registry descriptors и детерминированный выбор кандидатов OCR/HTR
-для регионов. `LOCAL_ONLY` исключает remote engines, явный выбор не допускает
-скрытого fallback. Планировщик не исполняет binary decoder, модель или сеть.
+Immutable registry descriptors и детерминированный OCR/HTR routing уже проверены. Добавлены три trusted synthetic printed images, manifest с digest и фиксированный local Tesseract smoke без активации production engine. Следующий Stage 02 slice требует isolated binary decoder/worker и репрезентативный golden dataset.
 
 ## Проверки текущего среза
 
-Unit tests для порядка, capability/privacy отказов и маршрутизации регионов;
-полный unit/schema suite Stage 01, Ruff и strict mypy. После этого сохранится
-граница между локальным routing plan и фактическим OCR runtime.
+39 unit/schema/contract tests PASS, Ruff check/format и strict mypy PASS. Локальный Tesseract smoke дал CER/WER 0 на трёх простых изображениях. Это не worker-isolation и не representative quality gate.
 
 ## Предыдущий завершённый срез — этап 01
 

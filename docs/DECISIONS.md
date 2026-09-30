@@ -118,3 +118,9 @@ Tesseract 5.5.3 с `eng/rus/ukr/osd` — кандидат benchmark, не выб
 - `ADR-P03`: конкретная политика retention/deletion/encryption/observability для локального persistence profile; должна быть принята до записи постоянных пользовательских данных на этапе 04.
 - `ADR-P04`: численные пороги review и performance budgets релиза по результатам baseline.
 - `ADR-P05`: HTR engine и GPU policy после появления репрезентативного handwriting dataset.
+
+## ADR-014 — AUTONOMOUS_DECISION: fixed synthetic printed golden smoke
+
+Status: accepted as a Stage 02 preparation slice, 2026-09-30. Context: engine selection needs a versioned golden corpus, while worker isolation and representative/private-data approval are not yet complete. Options: select the installed engine from an ad hoc image; wait for all Stage 02 gates; or first commit tiny authored synthetic images and a fixed-corpus diagnostic. Selected the latter. Three English/Russian/Ukrainian PNGs and their manifest digests are checked before the tool invokes Tesseract. The diagnostic accepts no arbitrary input file and is never imported by the production library.
+
+Why/reversibility: gives a reproducible quality smoke and tamper guard without promoting Tesseract or weakening the native worker boundary. Revert the slice to remove it; no persistence or public API changes. Evidence: 39 tests, Ruff/mypy PASS; Tesseract 5.5.3 local CER/WER 0 on three easy printed images, with measured latencies in `docs/evidence/stage02-printed-smoke.md`. Rollback: revert this bounded commit. Affected stage: 02 only. Representative golden data, decoder isolation and ADR-P02 remain open.
