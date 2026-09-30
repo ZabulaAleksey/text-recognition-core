@@ -22,6 +22,7 @@ packages = ["src/text_recognition_core"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+pythonpath = ["."]
 
 [tool.ruff]
 target-version = "py313"

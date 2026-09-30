@@ -79,6 +79,8 @@ Stage 02 planning evidence: `tests/unit/test_engine_registry.py` проверя�
 explicit selection, region mapping и fail-closed privacy/capability. Эти тесты
 не подтверждают worker isolation, engine contract или OCR quality.
 
+Pytest entrypoint parity: `uv run --locked --offline pytest` and `uv run --locked --offline python -m pytest` both resolve repository-local `tests` and diagnostic `tools` through the explicit project-root pythonpath. Use a writable `--basetemp` on restricted Windows hosts.
+
 Stage 01 local evidence: `uv lock --check --offline`, two-step `uv sync --locked
 --no-install-project` → `uv sync --locked --no-build-isolation`, `uv run pytest`,
 `uv run ruff check src tests`, `uv run ruff format --check src tests`, `uv run mypy src`,
