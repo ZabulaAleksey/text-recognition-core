@@ -1,5 +1,37 @@
 # Состояние проекта для AI
 
+## Текущий Stage 01 — typed foundation (2026-09-30)
+
+- Status: verified locally for the Stage 01 contract; branch `feature/trc-stage-01-foundation`.
+- Source: Python 3.13 library packaging, immutable domain values and Document → Page →
+  Region → Line → Token hierarchy, separate raw/current revision IDs, application ports,
+  strict Pydantic v2 request/result boundary, generated versioned JSON Schema.
+- Local checks: 29 unit/schema/supply-chain tests PASS; Ruff check/format PASS; mypy strict
+  PASS; `uv lock --check --offline` PASS; wheel/sdist build PASS; isolated wheel install,
+  import and packaged schema read PASS. Two-step clean offline restore with locked
+  Hatchling and `--no-build-isolation` PASS. `uv audit --locked`: 19 packages, zero known
+  vulnerabilities/adverse statuses after pytest `8.4.2 → 9.1.1`. CycloneDX SBOM and
+  license inventory: `docs/evidence/stage01-supply-chain.md`.
+- Environment: CPython 3.13.7 is installed at a machine-local exact path although
+  `py -0p` lists only 3.12; `uv` 0.12.3 created project-local `.venv`. No machine path
+  is embedded in `pyproject.toml`.
+- The accepted local path pins PyPI as the default index in `pyproject.toml`; registry
+  artifacts including the build backend are SHA-256 locked. Default isolated builds
+  can resolve build deps separately, so the documented verified path uses the
+  two-step lock-aware environment plus `--no-build-isolation`.
+- Boundary review: request/result JSON is byte-bounded and rejects invalid hierarchy,
+  coordinates, IDs, language tags, non-finite confidence, unknown fields and unknown
+  capabilities. Public parse functions expose redacted machine codes on validation
+  failure. Domain/application imports contain no infrastructure or executable
+  deserialization; the no-engine/no-storage boundary was checked against source.
+- Actual model artifact loading, binary parser isolation and live OCR remain Stage 02.
+- Runtime limits: no engine/model loader, worker, storage, REST, job execution or external
+  integration exists. Schema limits do not prove binary input isolation.
+- NEXT: Stage 02 requires a bounded synthetic golden slice and decoder/engine isolation
+  contract before any OCR adapter is activated. No live OCR acceptance is claimed.
+
+## Historical scaffold record (2026-08)
+
 ## Governance migration — 2026-08-24
 
 - Шесть подробных stage-файлов полностью объединены в `prompts/STAGES.md`; project overlay — PASS.

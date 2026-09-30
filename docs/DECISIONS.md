@@ -80,6 +80,23 @@ Raw snapshots являются append-only. Corrections ссылаются на 
 
 Локальный REST по умолчанию использует loopback/local IPC и аутентифицирует сгенерированный bearer token высокой энтропии или проверенные OS peer credentials. Bootstrap token использует приватный файл с проверенными permissions или OS credential store, но не аргументы CLI или environment output, который может попасть в logs; проверка выполняется за постоянное время, а rotation/revocation инвалидирует старые tokens. При отсутствии безопасного storage запуск завершается закрытым отказом. CORS полностью запрещён, cookie auth отсутствует. Non-loopback bind является remote profile и не может включаться одним удобным флагом.
 
+## ADR-012 — Stage 01 lock-aware Python build
+
+**Статус:** принято для local library foundation 2026-09-30.
+
+**AUTONOMOUS_DECISION.** Context: `uv sync --locked` проверяет project graph, но
+изолированная PEP 517 сборка может отдельно разрешить `hatchling` и зависимости
+вне `uv.lock`. Варианты: оставить default build и считать hashes достаточными;
+создать второй requirements lock; или включить build backend в dev group и выполнять
+двухшаговый restore с `--no-build-isolation`. Выбран последний: один lock, явно
+указанный PyPI index, сначала locked dependencies без project, затем project build
+в уже locked environment. Он обратим через Git revert без миграции данных.
+Evidence: clean offline two-step restore, no-build-isolation wheel/sdist, installed
+wheel smoke, 29 tests, Ruff/mypy и OSV audit 19/0. Rollback: revert Stage 01 commit,
+удалить только проверенную rebuildable `.venv` по отдельной cleanup процедуре.
+Affected stage: 01. Runtime OCR/model loaders остаются Stage 02 и не получают
+разрешения из этого решения.
+
 ## Ожидающие решения
 
 - `ADR-P01`: библиотеки декодирования PDF/image после исследования security/license/resources.

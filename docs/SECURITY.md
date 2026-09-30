@@ -2,6 +2,14 @@
 
 **Уровень риска:** высокий. TRC принимает потенциально вредоносный бинарный ввод и может обрабатывать дневники, работы учеников, документы и финансовые данные. Эта модель действует до любого открытия удалённого доступа.
 
+Stage 01 evidence: `uv.lock` хранит SHA-256 registry artifacts и явный trusted PyPI
+default; lock-aware two-step restore и offline no-build-isolation build прошли. OSV
+`uv audit --locked` проверил 19 пакетов без известных находок на 2026-09-30;
+CycloneDX SBOM и license metadata — `docs/evidence/stage01-supply-chain.md`.
+Boundary parser ограничивает JSON bytes и отдаёт редактированные error codes.
+Бинарный decoder, OCR/model worker и data storage ещё отсутствуют; их security
+gates должны пройти до Stage 02 activation.
+
 ## Защищаемые активы
 
 - исходные изображения и PDF, а также производные графические артефакты;

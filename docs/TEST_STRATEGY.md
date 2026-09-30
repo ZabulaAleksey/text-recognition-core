@@ -73,4 +73,12 @@
 
 ## Трассировка
 
+Stage 01 local evidence: `uv lock --check --offline`, two-step `uv sync --locked
+--no-install-project` → `uv sync --locked --no-build-isolation`, `uv run pytest`,
+`uv run ruff check src tests`, `uv run ruff format --check src tests`, `uv run mypy src`,
+`uv audit --locked` и `uv build --offline --no-build-isolation`. На Windows sandbox
+проверки использовали writable scratch `TEMP`/`TMP` и cache dirs; это не продуктовая
+runtime configuration. 29 unit/schema/supply-chain tests PASS, lint/type/build PASS.
+
+
 Тесты ссылаются на `FR-*`, `NFR-*`, `SEC-*`, `PERF-*` или `AC-*` в именах, markers или metadata отчёта. Требование завершено только после реализации и связи с автоматическим подтверждением либо когда документированная ручная проверка объясняет невозможность автоматизации.

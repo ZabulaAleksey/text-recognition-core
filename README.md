@@ -2,7 +2,9 @@
 
 Text Recognition Core (TRC) — проектируемое переиспользуемое ядро OCR/HTR с единым результатом распознавания, неизменяемым raw snapshot, исправлениями, revisions и сменяемыми recognition engines.
 
-Сейчас repository находится на этапе КАРКАСА: здесь определены требования, архитектура, контракты, безопасность, проверки и последовательность будущей реализации. Исходного кода продукта пока нет намеренно.
+КАРКАС принят. Stage 01 реализует локальный Python 3.13 package с immutable domain hierarchy,
+framework-independent ports, strict versioned request/result models и генерируемыми JSON Schema.
+OCR engine, adapters, persistence и REST ещё не реализованы.
 
 ## Основной инвариант
 
@@ -27,4 +29,11 @@ Applications → stable TRC contracts → RecognitionEngine ports → engine ada
 
 ## Следующий шаг
 
-После review КАРКАСА выполнить `prompts/stage-01-foundation.md`. До явного подтверждения не выполнять merge или push.
+Для clean restore Stage 01: `uv sync --locked --no-install-project`, затем
+`uv sync --locked --no-build-isolation`. Для проверки: `uv run pytest`,
+`uv run ruff check src tests`, `uv run ruff format --check src tests`, `uv run mypy src`,
+`uv lock --check --offline` и `uv audit --locked`. Offline build:
+`uv build --offline --no-build-isolation` из активной проектной `.venv`.
+На этой машине Python 3.13.7
+доступен по exact interpreter path; `py -0p` его не перечисляет. Source of truth для
+статуса и открытых gates — [`docs/AI_STATUS.md`](docs/AI_STATUS.md). Merge/push не выполнялись.

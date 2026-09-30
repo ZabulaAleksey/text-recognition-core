@@ -1,0 +1,445 @@
+{
+  "$defs": {
+    "AlternativeResult": {
+      "additionalProperties": false,
+      "properties": {
+        "confidence": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Confidence",
+          "type": "number"
+        },
+        "text": {
+          "maxLength": 4096,
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "text",
+        "confidence"
+      ],
+      "title": "AlternativeResult",
+      "type": "object"
+    },
+    "LineResult": {
+      "additionalProperties": false,
+      "properties": {
+        "bbox": {
+          "$ref": "#/$defs/NormalizedBox"
+        },
+        "confidence": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Confidence"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "reading_order": {
+          "minimum": 0,
+          "title": "Reading Order",
+          "type": "integer"
+        },
+        "region_id": {
+          "title": "Region Id",
+          "type": "string"
+        },
+        "text": {
+          "maxLength": 16384,
+          "title": "Text",
+          "type": "string"
+        },
+        "tokens": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/TokenResult"
+          },
+          "maxItems": 8192,
+          "title": "Tokens",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "region_id",
+        "reading_order",
+        "text",
+        "bbox"
+      ],
+      "title": "LineResult",
+      "type": "object"
+    },
+    "NormalizedBox": {
+      "additionalProperties": false,
+      "properties": {
+        "height": {
+          "exclusiveMinimum": 0,
+          "maximum": 1,
+          "title": "Height",
+          "type": "number"
+        },
+        "width": {
+          "exclusiveMinimum": 0,
+          "maximum": 1,
+          "title": "Width",
+          "type": "number"
+        },
+        "x": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "X",
+          "type": "number"
+        },
+        "y": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Y",
+          "type": "number"
+        }
+      },
+      "required": [
+        "x",
+        "y",
+        "width",
+        "height"
+      ],
+      "title": "NormalizedBox",
+      "type": "object"
+    },
+    "PageResult": {
+      "additionalProperties": false,
+      "properties": {
+        "confidence": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Confidence"
+        },
+        "document_id": {
+          "title": "Document Id",
+          "type": "string"
+        },
+        "height_px": {
+          "exclusiveMinimum": 0,
+          "title": "Height Px",
+          "type": "integer"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "page_number": {
+          "exclusiveMinimum": 0,
+          "title": "Page Number",
+          "type": "integer"
+        },
+        "regions": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/RegionResult"
+          },
+          "maxItems": 4096,
+          "title": "Regions",
+          "type": "array"
+        },
+        "width_px": {
+          "exclusiveMinimum": 0,
+          "title": "Width Px",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "id",
+        "document_id",
+        "page_number",
+        "width_px",
+        "height_px"
+      ],
+      "title": "PageResult",
+      "type": "object"
+    },
+    "ProvenanceResult": {
+      "additionalProperties": false,
+      "properties": {
+        "attempt": {
+          "exclusiveMinimum": 0,
+          "title": "Attempt",
+          "type": "integer"
+        },
+        "configuration_sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Configuration Sha256",
+          "type": "string"
+        },
+        "created_at": {
+          "format": "date-time",
+          "title": "Created At",
+          "type": "string"
+        },
+        "engine_name": {
+          "minLength": 1,
+          "title": "Engine Name",
+          "type": "string"
+        },
+        "engine_version": {
+          "minLength": 1,
+          "title": "Engine Version",
+          "type": "string"
+        },
+        "input_sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Input Sha256",
+          "type": "string"
+        },
+        "model_version": {
+          "minLength": 1,
+          "title": "Model Version",
+          "type": "string"
+        },
+        "pipeline_version": {
+          "minLength": 1,
+          "title": "Pipeline Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "input_sha256",
+        "configuration_sha256",
+        "engine_name",
+        "engine_version",
+        "model_version",
+        "pipeline_version",
+        "created_at",
+        "attempt"
+      ],
+      "title": "ProvenanceResult",
+      "type": "object"
+    },
+    "RegionResult": {
+      "additionalProperties": false,
+      "properties": {
+        "bbox": {
+          "$ref": "#/$defs/NormalizedBox"
+        },
+        "confidence": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Confidence"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "lines": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/LineResult"
+          },
+          "maxItems": 4096,
+          "title": "Lines",
+          "type": "array"
+        },
+        "page_id": {
+          "title": "Page Id",
+          "type": "string"
+        },
+        "reading_order": {
+          "minimum": 0,
+          "title": "Reading Order",
+          "type": "integer"
+        },
+        "type": {
+          "title": "Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "page_id",
+        "reading_order",
+        "type",
+        "bbox"
+      ],
+      "title": "RegionResult",
+      "type": "object"
+    },
+    "TokenResult": {
+      "additionalProperties": false,
+      "properties": {
+        "alternatives": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/AlternativeResult"
+          },
+          "maxItems": 16,
+          "title": "Alternatives",
+          "type": "array"
+        },
+        "bbox": {
+          "$ref": "#/$defs/NormalizedBox"
+        },
+        "confidence": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Confidence"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "line_id": {
+          "title": "Line Id",
+          "type": "string"
+        },
+        "reading_order": {
+          "minimum": 0,
+          "title": "Reading Order",
+          "type": "integer"
+        },
+        "text": {
+          "maxLength": 4096,
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "line_id",
+        "reading_order",
+        "text",
+        "bbox"
+      ],
+      "title": "TokenResult",
+      "type": "object"
+    },
+    "WarningResult": {
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "maxLength": 128,
+          "title": "Code",
+          "type": "string"
+        },
+        "message": {
+          "maxLength": 2048,
+          "title": "Message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "message"
+      ],
+      "title": "WarningResult",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "confidence": {
+      "anyOf": [
+        {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Confidence"
+    },
+    "current_revision_id": {
+      "title": "Current Revision Id",
+      "type": "string"
+    },
+    "document_id": {
+      "title": "Document Id",
+      "type": "string"
+    },
+    "pages": {
+      "items": {
+        "$ref": "#/$defs/PageResult"
+      },
+      "maxItems": 256,
+      "minItems": 1,
+      "title": "Pages",
+      "type": "array"
+    },
+    "plain_text": {
+      "maxLength": 2000000,
+      "title": "Plain Text",
+      "type": "string"
+    },
+    "provenance": {
+      "$ref": "#/$defs/ProvenanceResult"
+    },
+    "raw_result_id": {
+      "title": "Raw Result Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "default": "recognition-result/v1",
+      "pattern": "^recognition-result/v1$",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "warnings": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/WarningResult"
+      },
+      "maxItems": 128,
+      "title": "Warnings",
+      "type": "array"
+    }
+  },
+  "required": [
+    "document_id",
+    "raw_result_id",
+    "current_revision_id",
+    "provenance",
+    "pages",
+    "plain_text"
+  ],
+  "title": "RecognitionResult",
+  "type": "object"
+}

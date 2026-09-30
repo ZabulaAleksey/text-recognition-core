@@ -13,11 +13,13 @@
 - стратегия security, testing и совместимости контекста;
 - project overlay, stage prompts и текущий status.
 
-Product source code не создавался.
+До Stage 01 product source code не создавался; текущая local branch уже содержит foundation.
 
 ## Текущий этап
 
 ### Этап 01 — Фундамент и типизированные контракты
+
+Status: verified locally 2026-09-30 на feature branch; merge/push не выполнялись.
 
 Создать границы пакета Python, неизменяемые типизированные domain/application contracts, сгенерированные schemas, in-memory ports и фундаментальные tests. Без реального OCR SDK, REST или persistent storage.
 
@@ -26,6 +28,8 @@ Gate: доказаны `FR-001`, `FR-002`, `FR-010`, `AC-001`, `AC-010`, пра�
 ## Запланировано
 
 ### Этап 02 — Intake, pipeline и один базовый OCR adapter
+
+Status: planned; adapter activation требует отдельного golden/worker evidence.
 
 Реализовать безопасные ports intake/preprocessing, registry и выбор engines, fake adapter и локальный OCR adapter, выбранный по подтверждениям. Создать golden/baseline report и выбрать engine через ADR.
 

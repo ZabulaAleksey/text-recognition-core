@@ -5,6 +5,8 @@ __pycache__/
 .mypy_cache/
 .ruff_cache/
 .venv/
+dist/
+build/
 
 # Локальная конфигурация и секреты
 .env

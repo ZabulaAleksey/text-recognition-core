@@ -1,0 +1,276 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.5",
+  "version": 1,
+  "serialNumber": "urn:uuid:83d3a522-037c-4c21-b130-658e9a486807",
+  "metadata": {
+    "timestamp": "2026-09-30T02:59:47.212915300Z",
+    "tools": [
+      {
+        "vendor": "Astral Software Inc.",
+        "name": "uv",
+        "version": "0.12.3"
+      }
+    ],
+    "component": {
+      "type": "library",
+      "bom-ref": "text-recognition-core-1@0.1.0",
+      "name": "text-recognition-core",
+      "version": "0.1.0",
+      "properties": [
+        {
+          "name": "uv:package:is_project_root",
+          "value": "true"
+        }
+      ]
+    }
+  },
+  "components": [
+    {
+      "type": "library",
+      "bom-ref": "annotated-types-2@0.8.0",
+      "name": "annotated-types",
+      "version": "0.8.0",
+      "purl": "pkg:pypi/annotated-types@0.8.0"
+    },
+    {
+      "type": "library",
+      "bom-ref": "colorama-3@0.4.6",
+      "name": "colorama",
+      "version": "0.4.6",
+      "purl": "pkg:pypi/colorama@0.4.6",
+      "properties": [
+        {
+          "name": "uv:package:marker",
+          "value": "sys_platform == 'win32'"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "hatchling-4@1.32.4",
+      "name": "hatchling",
+      "version": "1.32.4",
+      "purl": "pkg:pypi/hatchling@1.32.4"
+    },
+    {
+      "type": "library",
+      "bom-ref": "iniconfig-5@2.3.0",
+      "name": "iniconfig",
+      "version": "2.3.0",
+      "purl": "pkg:pypi/iniconfig@2.3.0"
+    },
+    {
+      "type": "library",
+      "bom-ref": "librt-6@0.16.0",
+      "name": "librt",
+      "version": "0.16.0",
+      "purl": "pkg:pypi/librt@0.16.0",
+      "properties": [
+        {
+          "name": "uv:package:marker",
+          "value": "platform_python_implementation != 'PyPy'"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "mypy-7@1.20.2",
+      "name": "mypy",
+      "version": "1.20.2",
+      "purl": "pkg:pypi/mypy@1.20.2"
+    },
+    {
+      "type": "library",
+      "bom-ref": "mypy-extensions-8@1.1.0",
+      "name": "mypy-extensions",
+      "version": "1.1.0",
+      "purl": "pkg:pypi/mypy-extensions@1.1.0"
+    },
+    {
+      "type": "library",
+      "bom-ref": "packaging-9@26.3",
+      "name": "packaging",
+      "version": "26.3",
+      "purl": "pkg:pypi/packaging@26.3"
+    },
+    {
+      "type": "library",
+      "bom-ref": "pathspec-10@1.1.1",
+      "name": "pathspec",
+      "version": "1.1.1",
+      "purl": "pkg:pypi/pathspec@1.1.1"
+    },
+    {
+      "type": "library",
+      "bom-ref": "pluggy-11@1.6.0",
+      "name": "pluggy",
+      "version": "1.6.0",
+      "purl": "pkg:pypi/pluggy@1.6.0"
+    },
+    {
+      "type": "library",
+      "bom-ref": "pydantic-12@2.13.5",
+      "name": "pydantic",
+      "version": "2.13.5",
+      "purl": "pkg:pypi/pydantic@2.13.5"
+    },
+    {
+      "type": "library",
+      "bom-ref": "pydantic-core-13@2.46.5",
+      "name": "pydantic-core",
+      "version": "2.46.5",
+      "purl": "pkg:pypi/pydantic-core@2.46.5"
+    },
+    {
+      "type": "library",
+      "bom-ref": "pygments-14@2.21.0",
+      "name": "pygments",
+      "version": "2.21.0",
+      "purl": "pkg:pypi/pygments@2.21.0"
+    },
+    {
+      "type": "library",
+      "bom-ref": "pytest-15@9.1.1",
+      "name": "pytest",
+      "version": "9.1.1",
+      "purl": "pkg:pypi/pytest@9.1.1"
+    },
+    {
+      "type": "library",
+      "bom-ref": "ruff-16@0.16.9",
+      "name": "ruff",
+      "version": "0.16.9",
+      "purl": "pkg:pypi/ruff@0.16.9"
+    },
+    {
+      "type": "library",
+      "bom-ref": "tomlkit-17@0.15.1",
+      "name": "tomlkit",
+      "version": "0.15.1",
+      "purl": "pkg:pypi/tomlkit@0.15.1"
+    },
+    {
+      "type": "library",
+      "bom-ref": "trove-classifiers-18@2026.9.21.13",
+      "name": "trove-classifiers",
+      "version": "2026.9.21.13",
+      "purl": "pkg:pypi/trove-classifiers@2026.9.21.13"
+    },
+    {
+      "type": "library",
+      "bom-ref": "typing-extensions-19@4.16.0",
+      "name": "typing-extensions",
+      "version": "4.16.0",
+      "purl": "pkg:pypi/typing-extensions@4.16.0"
+    },
+    {
+      "type": "library",
+      "bom-ref": "typing-inspection-20@0.4.4",
+      "name": "typing-inspection",
+      "version": "0.4.4",
+      "purl": "pkg:pypi/typing-inspection@0.4.4"
+    }
+  ],
+  "dependencies": [
+    {
+      "ref": "annotated-types-2@0.8.0"
+    },
+    {
+      "ref": "colorama-3@0.4.6"
+    },
+    {
+      "ref": "hatchling-4@1.32.4",
+      "dependsOn": [
+        "packaging-9@26.3",
+        "pathspec-10@1.1.1",
+        "pluggy-11@1.6.0",
+        "tomlkit-17@0.15.1",
+        "trove-classifiers-18@2026.9.21.13"
+      ]
+    },
+    {
+      "ref": "iniconfig-5@2.3.0"
+    },
+    {
+      "ref": "librt-6@0.16.0"
+    },
+    {
+      "ref": "mypy-7@1.20.2",
+      "dependsOn": [
+        "librt-6@0.16.0",
+        "mypy-extensions-8@1.1.0",
+        "pathspec-10@1.1.1",
+        "typing-extensions-19@4.16.0"
+      ]
+    },
+    {
+      "ref": "mypy-extensions-8@1.1.0"
+    },
+    {
+      "ref": "packaging-9@26.3"
+    },
+    {
+      "ref": "pathspec-10@1.1.1"
+    },
+    {
+      "ref": "pluggy-11@1.6.0"
+    },
+    {
+      "ref": "pydantic-12@2.13.5",
+      "dependsOn": [
+        "annotated-types-2@0.8.0",
+        "pydantic-core-13@2.46.5",
+        "typing-extensions-19@4.16.0",
+        "typing-inspection-20@0.4.4"
+      ]
+    },
+    {
+      "ref": "pydantic-core-13@2.46.5",
+      "dependsOn": [
+        "typing-extensions-19@4.16.0"
+      ]
+    },
+    {
+      "ref": "pygments-14@2.21.0"
+    },
+    {
+      "ref": "pytest-15@9.1.1",
+      "dependsOn": [
+        "colorama-3@0.4.6",
+        "iniconfig-5@2.3.0",
+        "packaging-9@26.3",
+        "pluggy-11@1.6.0",
+        "pygments-14@2.21.0"
+      ]
+    },
+    {
+      "ref": "ruff-16@0.16.9"
+    },
+    {
+      "ref": "text-recognition-core-1@0.1.0",
+      "dependsOn": [
+        "hatchling-4@1.32.4",
+        "mypy-7@1.20.2",
+        "pydantic-12@2.13.5",
+        "pytest-15@9.1.1",
+        "ruff-16@0.16.9"
+      ]
+    },
+    {
+      "ref": "tomlkit-17@0.15.1"
+    },
+    {
+      "ref": "trove-classifiers-18@2026.9.21.13"
+    },
+    {
+      "ref": "typing-extensions-19@4.16.0"
+    },
+    {
+      "ref": "typing-inspection-20@0.4.4",
+      "dependsOn": [
+        "typing-extensions-19@4.16.0"
+      ]
+    }
+  ]
+}

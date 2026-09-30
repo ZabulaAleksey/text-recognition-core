@@ -1,0 +1,211 @@
+{
+  "$defs": {
+    "BatchPolicy": {
+      "enum": [
+        "ALL_OR_NOTHING",
+        "ALLOW_PARTIAL"
+      ],
+      "title": "BatchPolicy",
+      "type": "string"
+    },
+    "CapabilityName": {
+      "enum": [
+        "TEXT",
+        "LAYOUT",
+        "TABLES",
+        "HANDWRITING",
+        "RECEIPT",
+        "MATH",
+        "CHECKBOXES",
+        "BARCODES"
+      ],
+      "title": "CapabilityName",
+      "type": "string"
+    },
+    "CapabilityRequirement": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "$ref": "#/$defs/CapabilityName"
+        },
+        "required": {
+          "default": true,
+          "title": "Required",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "CapabilityRequirement",
+      "type": "object"
+    },
+    "EnginePreferences": {
+      "additionalProperties": false,
+      "properties": {
+        "preferred": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 8,
+          "title": "Preferred",
+          "type": "array"
+        }
+      },
+      "title": "EnginePreferences",
+      "type": "object"
+    },
+    "OutputOptions": {
+      "additionalProperties": false,
+      "properties": {
+        "include_alternatives": {
+          "default": true,
+          "title": "Include Alternatives",
+          "type": "boolean"
+        },
+        "include_layout": {
+          "default": true,
+          "title": "Include Layout",
+          "type": "boolean"
+        }
+      },
+      "title": "OutputOptions",
+      "type": "object"
+    },
+    "PreprocessingOptions": {
+      "additionalProperties": false,
+      "properties": {
+        "denoise": {
+          "default": false,
+          "title": "Denoise",
+          "type": "boolean"
+        },
+        "deskew": {
+          "default": false,
+          "title": "Deskew",
+          "type": "boolean"
+        }
+      },
+      "title": "PreprocessingOptions",
+      "type": "object"
+    },
+    "PrivacyMode": {
+      "enum": [
+        "LOCAL_ONLY",
+        "HYBRID",
+        "REMOTE_ALLOWED"
+      ],
+      "title": "PrivacyMode",
+      "type": "string"
+    },
+    "RecognitionMode": {
+      "enum": [
+        "AUTO",
+        "OCR",
+        "HTR",
+        "MIXED"
+      ],
+      "title": "RecognitionMode",
+      "type": "string"
+    },
+    "SourceRef": {
+      "additionalProperties": false,
+      "properties": {
+        "source_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Source Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source_id"
+      ],
+      "title": "SourceRef",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "batch_policy": {
+      "$ref": "#/$defs/BatchPolicy",
+      "default": "ALL_OR_NOTHING"
+    },
+    "capabilities": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/CapabilityRequirement"
+      },
+      "maxItems": 16,
+      "title": "Capabilities",
+      "type": "array"
+    },
+    "context": {
+      "additionalProperties": true,
+      "title": "Context",
+      "type": "object"
+    },
+    "engine_preferences": {
+      "$ref": "#/$defs/EnginePreferences"
+    },
+    "idempotency_key": {
+      "anyOf": [
+        {
+          "maxLength": 128,
+          "minLength": 1,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Idempotency Key"
+    },
+    "languages": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 16,
+      "minItems": 1,
+      "title": "Languages",
+      "type": "array"
+    },
+    "mode": {
+      "$ref": "#/$defs/RecognitionMode"
+    },
+    "output": {
+      "$ref": "#/$defs/OutputOptions"
+    },
+    "preprocessing": {
+      "$ref": "#/$defs/PreprocessingOptions"
+    },
+    "privacy_mode": {
+      "$ref": "#/$defs/PrivacyMode",
+      "default": "LOCAL_ONLY"
+    },
+    "schema_version": {
+      "default": "recognition-request/v1",
+      "pattern": "^recognition-request/v1$",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "sources": {
+      "items": {
+        "$ref": "#/$defs/SourceRef"
+      },
+      "maxItems": 16,
+      "minItems": 1,
+      "title": "Sources",
+      "type": "array"
+    }
+  },
+  "required": [
+    "sources",
+    "mode",
+    "languages"
+  ],
+  "title": "RecognitionRequest",
+  "type": "object"
+}

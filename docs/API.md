@@ -1,6 +1,11 @@
 # Контракты API
 
-**Статус:** проектирование контрактов для Schema v1 / API v1. Код и OpenAPI ещё не созданы. Типизированные application models являются источником сгенерированных JSON Schema/OpenAPI; ручная параллельная схема запрещена.
+**Статус:** Stage 01 содержит Pydantic v2 `RecognitionRequest`/`RecognitionResult` и две
+генерируемые JSON Schema v1. REST/OpenAPI и application use cases ещё не созданы.
+Boundary models являются источником схем; ручная параллельная схема запрещена.
+`parse_request_json`/`parse_result_json` — публичные byte-bounded validation entrypoints;
+они возвращают только редактированные machine-readable codes при ошибке. Transport
+adapter не должен логировать raw `ValidationError`, request body или распознанный текст.
 
 ## Соглашения
 
