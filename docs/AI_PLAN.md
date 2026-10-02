@@ -1,7 +1,7 @@
 # Текущий исполняемый срез — этап 02, synthetic printed golden smoke and byte envelope
 
 **Состояние:** независимый planning slice Stage 02 реализуется после локально проверенного
-Stage 01. Pure routing и bounded synthetic printed golden smoke and byte envelope проверены локально; контракты: `specs/features/engine-routing.spec.md` и `specs/features/printed-golden-smoke.spec.md`. Полный Stage 02 остаётся открытым до worker isolation, репрезентативного golden benchmark и одного выбранного OCR adapter.
+Stage 01. Pure routing, bounded synthetic printed golden smoke, joint stdout/stderr capture limit, and byte envelope проверены локально; контракты: `specs/features/engine-routing.spec.md`, `specs/features/printed-golden-smoke.spec.md` и `specs/features/source-byte-envelope.spec.md`. Полный Stage 02 остаётся открытым до worker isolation, репрезентативного golden benchmark и одного выбранного OCR adapter.
 
 ## Результат текущего среза
 
@@ -9,7 +9,7 @@ Immutable registry descriptors и детерминированный OCR/HTR rou
 
 ## Проверки текущего среза
 
-56 unit/schema/contract tests PASS, Ruff check/format и strict mypy PASS. Локальный Tesseract smoke дал CER/WER 0 на трёх простых изображениях. Это не worker-isolation и не representative quality gate.
+63 unit/schema/contract tests PASS via `uv run --locked --offline --no-sync` using the existing project environment; Ruff check/format and strict mypy PASS. Seven real-child subprocess regressions cover joint stdout/stderr overflow and boundary, invalid UTF-8, sanitized process-start errors, timeout/reap and read-failure/reap. Локальный Tesseract smoke дал CER/WER 0 на трёх простых изображениях. This remains a tiny developer diagnostic and is not worker isolation or a representative quality gate. The no-sync run warned that the environment uses Python 3.13.7 while its creation marker records 3.13.6; normal uv sync was blocked by protected cache/project-venv metadata ACLs, so no fresh locked restore is claimed.
 
 ## Предыдущий завершённый срез — этап 01
 

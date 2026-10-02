@@ -7,16 +7,138 @@ import json
 import shutil
 import struct
 import subprocess
+import threading
 import time
 import unicodedata
+from collections.abc import Sequence
 from pathlib import Path
 from typing import Any
 
 CORPUS = Path(__file__).resolve().parents[1] / "tests/fixtures/printed_golden_v1"
 MAX_IMAGE_BYTES = 100_000
-MAX_STDOUT_BYTES = 16_384
+MAX_OUTPUT_BYTES = 16_384
+_OUTPUT_READ_BYTES = 4_096
 MAX_EXECUTABLE_BYTES = 100_000_000
 LANGUAGES = {"eng", "rus", "ukr"}
+
+
+class CandidateProcessError(RuntimeError):
+    """A bounded diagnostic child failed without exposing its output."""
+
+
+def _run_bounded_process(
+    command: Sequence[str], *, timeout_seconds: float, max_output_bytes: int = MAX_OUTPUT_BYTES
+) -> tuple[str, str, int]:
+    """Run one direct child with bounded joint output and bounded cleanup.
+
+    This developer diagnostic owns and reaps only the exact process returned by
+    Popen. It does not claim to contain or terminate descendants.
+    """
+    if (
+        not command
+        or isinstance(command, (str, bytes))
+        or any(not isinstance(argument, str) for argument in command)
+        or type(timeout_seconds) not in (int, float)
+        or not 0 < timeout_seconds <= 10
+    ):
+        raise ValueError("invalid candidate process limits")
+    if type(max_output_bytes) is not int or not 0 < max_output_bytes <= MAX_OUTPUT_BYTES:
+        raise ValueError("invalid candidate output limit")
+
+    started = time.monotonic()
+    deadline = started + timeout_seconds
+    cleanup_reserve = min(0.5, timeout_seconds * 0.25)
+    run_deadline = deadline - cleanup_reserve
+    try:
+        process = subprocess.Popen(
+            list(command),
+            stdin=subprocess.DEVNULL,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            close_fds=True,
+        )
+    except OSError:
+        raise CandidateProcessError("candidate process start failed") from None
+    assert process.stdout is not None and process.stderr is not None
+
+    outputs = {"stdout": bytearray(), "stderr": bytearray()}
+    output_lock = threading.Lock()
+    output_limit = threading.Event()
+    read_failure = threading.Event()
+
+    def drain(name: str, stream: Any) -> None:
+        try:
+            while chunk := stream.read(_OUTPUT_READ_BYTES):
+                with output_lock:
+                    current_size = len(outputs["stdout"]) + len(outputs["stderr"])
+                    remaining = max_output_bytes - current_size
+                    if len(chunk) > remaining:
+                        output_limit.set()
+                        return
+                    outputs[name].extend(chunk)
+        except OSError:
+            read_failure.set()
+        finally:
+            try:
+                stream.close()
+            except OSError:
+                read_failure.set()
+
+    readers = [
+        threading.Thread(target=drain, args=("stdout", process.stdout), daemon=True),
+        threading.Thread(target=drain, args=("stderr", process.stderr), daemon=True),
+    ]
+    for reader in readers:
+        reader.start()
+
+    failure: str | None = None
+    while True:
+        if output_limit.is_set():
+            failure = "candidate output exceeded the byte limit"
+            break
+        if read_failure.is_set():
+            failure = "candidate output read failed"
+            break
+        if process.poll() is not None:
+            break
+        remaining = run_deadline - time.monotonic()
+        if remaining <= 0:
+            failure = "candidate process timed out"
+            break
+        output_limit.wait(min(0.01, remaining))
+
+    if failure is not None and process.poll() is None:
+        try:
+            process.kill()
+        except OSError:
+            failure = "candidate process cleanup failed"
+
+    try:
+        remaining = max(0.0, deadline - time.monotonic())
+        returncode = process.wait(timeout=remaining)
+    except subprocess.TimeoutExpired:
+        failure = "candidate process cleanup timed out"
+        returncode = process.poll()
+
+    for reader in readers:
+        reader.join(timeout=max(0.0, deadline - time.monotonic()))
+    if any(reader.is_alive() for reader in readers):
+        failure = "candidate output stream cleanup timed out"
+    elif output_limit.is_set():
+        failure = "candidate output exceeded the byte limit"
+    elif read_failure.is_set():
+        failure = "candidate output read failed"
+
+    if failure is not None:
+        raise CandidateProcessError(failure)
+    if returncode is None:
+        raise CandidateProcessError("candidate process state unavailable")
+    try:
+        stdout = outputs["stdout"].decode("utf-8", errors="strict")
+        stderr = outputs["stderr"].decode("utf-8", errors="strict")
+    except UnicodeDecodeError:
+        raise CandidateProcessError("candidate output is not valid UTF-8") from None
+    return stdout, stderr, returncode
 
 
 def manifest_samples() -> list[dict[str, Any]]:
@@ -94,16 +216,18 @@ def benchmark() -> dict[str, Any]:
     executable = shutil.which("tesseract")
     if executable is None:
         raise RuntimeError("tesseract unavailable")
-    version = (
-        subprocess.run([executable, "--version"], capture_output=True, timeout=5, check=True)
-        .stdout.decode("utf-8", errors="replace")
-        .splitlines()[0]
+    version_stdout, _, version_returncode = _run_bounded_process(
+        [executable, "--version"], timeout_seconds=5
     )
+    version_lines = version_stdout.splitlines()
+    if version_returncode != 0 or not version_lines:
+        raise CandidateProcessError("candidate version probe failed")
+    version = version_lines[0]
     engine_sha256 = executable_sha256(executable)
     results: list[dict[str, Any]] = []
     for sample in samples:
         start = time.monotonic()
-        process = subprocess.run(
+        stdout, _, returncode = _run_bounded_process(
             [
                 executable,
                 str(CORPUS / sample["file"]),
@@ -113,15 +237,13 @@ def benchmark() -> dict[str, Any]:
                 "--psm",
                 "6",
             ],
-            capture_output=True,
-            timeout=10,
-            check=False,
+            timeout_seconds=10,
         )
         elapsed_ms = round((time.monotonic() - start) * 1000, 2)
-        if process.returncode or len(process.stdout) > MAX_STDOUT_BYTES:
+        if returncode:
             raise RuntimeError(f"OCR candidate failed for {sample['id']}")
         expected = _normalized(sample["expected"])
-        actual = _normalized(process.stdout.decode("utf-8", errors="replace"))
+        actual = _normalized(stdout)
         results.append(
             {
                 "id": sample["id"],

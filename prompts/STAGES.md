@@ -65,6 +65,7 @@
 ## stage-02-engine-pipeline
 
 - Night restore checkpoint 2026-10-01: PARTIAL remains; locked editable-build gap fixed via editables~=0.3 (0.6). Fresh separate-environment offline two-step restore/import PASS; 56 tests/Ruff/strict mypy/lock/wheel/sdist PASS, uv audit 20 packages zero known. Evidence: docs/notes/night-reproducibility-2026-10-01.md. NEXT remains isolated decoder contract and representative OCR benchmark, no native parser activation.
+- 2026-10-02 bounded diagnostic repair: `tools/printed_golden_smoke.py` enforces a joint 16 KiB stdout+stderr cap while reading, strictly decodes bounded UTF-8, sanitizes process-start/output errors, and kills/reaps only its exact direct child on overflow, timeout, or read failure. Seven new regressions cover simultaneous flood, joint accounting, exact cap, invalid UTF-8, sanitized start failure, timeout/reap, and read failure/reap. Full suite 63 PASS; Ruff check/format and strict mypy PASS; actual synthetic Tesseract rerun CER/WER 0 for EN/RU/UA. Evidence: `docs/evidence/stage02-printed-smoke.md`. The smoke remains developer-only and does not claim descendant containment, worker isolation, representative quality, or engine selection. NEXT remains ADR-P01 isolated decoder/security decision, then representative benchmark and ADR-P02; Stage 02 PARTIAL.
 Stage 02 current outcome (2026-09-30): PARTIAL. Pure immutable engine routing planner,
 privacy/capability fail-closed behavior and region planning verified locally; see
 `specs/features/engine-routing.spec.md` and `docs/AI_STATUS.md`. Binary intake,

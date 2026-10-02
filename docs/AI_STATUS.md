@@ -3,6 +3,7 @@
 ## Текущий Stage 02 — routing, golden smoke и byte envelope (2026-09-30)
 
 - 2026-10-01: исправлен locked editable restore gap editables; fresh offline two-step restore/import PASS, 56 tests/Ruff/format/mypy/build PASS; uv audit 20 packages zero known. Фактический Python 3.13.6. Evidence: docs/notes/night-reproducibility-2026-10-01.md; OCR/decoder isolation остаются PARTIAL.
+- 2026-10-02: synthetic smoke enforces a joint 16 KiB stdout+stderr limit while reading, strictly decodes bounded UTF-8, sanitizes process-start/output errors, and kills/reaps only the direct child on overflow, timeout or read failure. Seven new real-child regressions PASS; full suite 63 PASS via `uv run --locked --offline --no-sync`; Ruff check/format and strict mypy PASS. Actual local Tesseract 5.5.3 smoke on fixed synthetic EN/RU/UA images returned CER/WER 0; this does not claim worker/process-tree isolation or representative quality. The no-sync run warned that the existing venv is Python 3.13.7 but its creation marker records 3.13.6. Normal uv sync was blocked by protected machine-cache/project-venv metadata ACLs, so no fresh locked restore is claimed. Evidence: `docs/evidence/stage02-printed-smoke.md`.
 
 - Added a bounded pre-decoder source byte envelope: PNG/JPEG/PDF leading signatures,
   64 MiB upper cap, streamed SHA-256, content-free failures. No decoder/worker or OCR
@@ -16,7 +17,7 @@
 - Stage 02 остаётся открытым: нет binary decoder, изолированного worker, representative golden corpus/benchmark, принятого OCR adapter и runtime end-to-end evidence.
 - Установленный Tesseract 5.5.3 с языками eng/rus/ukr/osd — только доступный
   benchmark candidate; проектный пакет от него не зависит.
-- Current local validation: 56 tests PASS via `uv run --locked pytest`; Ruff check/format PASS, strict mypy PASS. Restricted Windows Temp required a writable workspace `--basetemp`.
+- Latest local validation: 63 tests PASS via `uv run --locked --offline --no-sync` with `--basetemp` in writable task scratch; Ruff check/format and strict mypy PASS. This was not a fresh locked restore. Restricted host cache and project venv metadata prevented the normal uv sync runner in this sandbox; the existing venv reports Python 3.13.7 against a 3.13.6 creation marker.
 
 
 ## Текущий Stage 01 — typed foundation (2026-09-30)
