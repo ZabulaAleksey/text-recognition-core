@@ -18,8 +18,8 @@ Raw recognition — evidence конкретного engine/pipeline. Польз�
 
 ## Как продолжить самостоятельно
 
-1. Прочитать `docs/AI_STATUS.md` и текущий `docs/AI_PLAN.md`.
-2. Открыть только `prompts/stage-01-foundation.md` и перечисленный там context.
+1. Прочитать выбранный record `docs/STAGES.md` и относящиеся sections `specs/system.spec.md`.
+2. Проверить prerequisites и текущие gates выбранного этапа; исторический catalog из `docs/notes/` не использовать как launcher.
 3. Создать отдельную feature branch от принятого `main`.
 4. Реализовать только разрешённые области и связать тесты с IDs требований.
 5. Выполнить stage tests/review, обновить status/logs и сделать один логический commit.

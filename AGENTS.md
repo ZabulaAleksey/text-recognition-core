@@ -7,8 +7,7 @@
 1. `specs/system.spec.md` — требования продукта.
 2. `docs/DECISIONS.md` — принятые существенные решения.
 3. `docs/ARCHITECTURE.md`, `docs/API.md`, `docs/DATA_MODEL.md` — границы и контракты.
-4. текущий stage prompt / `docs/AI_PLAN.md` — ограниченный исполняемый срез.
-5. `docs/AI_STATUS.md` — фактическое состояние.
+4. `docs/STAGES.md` — выбранный исполняемый срез, status, evidence и NEXT.
 
 Не менять требования или публичные контракты молча. При конфликте остановить спорное изменение, зафиксировать решение и синхронизировать источники истины.
 
@@ -35,7 +34,7 @@
 - Storage/jobs: разделы SPEC 37–59, `docs/SECURITY.md`, storage/job ADR и integration tests.
 - Application adapter: `docs/INTEGRATIONS.md`, relevant result schema и adapter tests; не загружать логику остальных consumers.
 - Security/privacy: `SEC-*`, `docs/SECURITY.md` и negative tests; использовать security review.
-- Текущий этап: читать только соответствующий файл из `prompts/`, `docs/AI_PLAN.md` и компактный `docs/AI_STATUS.md`.
+- Текущий этап: читать только выбранный record в `docs/STAGES.md` и относящиеся разделы SPEC/ADR; исторический catalog в `docs/notes/` не является launcher.
 
 Не загружать автоматически все prompts, logs, fixtures и весь SPEC, если достаточно конкретных разделов.
 

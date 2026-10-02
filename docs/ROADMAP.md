@@ -1,6 +1,6 @@
 # Дорожная карта
 
-Этапы выполняются последовательно, если prompt явно не разрешает независимое исследование. Каждый этап реализации завершается тестами, review, синхронизацией status/log, commit и merge под управлением пользователя.
+Этапы выполняются последовательно, если выбранный record `docs/STAGES.md` явно не разрешает независимое исследование. Каждый этап реализации завершается тестами, review, синхронизацией execution state, commit и merge под управлением пользователя.
 
 ## Завершено
 
@@ -11,29 +11,29 @@
 - архитектура и контракты API, данных и интеграций;
 - решения о stack и архитектуре;
 - стратегия security, testing и совместимости контекста;
-- project overlay, stage prompts и текущий status.
+- project overlay и текущий selected record в `docs/STAGES.md`.
 
 До Stage 01 product source code не создавался; текущая local branch уже содержит foundation.
 
-## Текущий этап
-
 ### Этап 01 — Фундамент и типизированные контракты
 
-Status: verified locally 2026-09-30 на feature branch; merge/push не выполнялись.
+Status: verified locally; source/evidence and publication checkpoint belong to docs/STAGES.md.
 
 Создать границы пакета Python, неизменяемые типизированные domain/application contracts, сгенерированные schemas, in-memory ports и фундаментальные tests. Без реального OCR SDK, REST или persistent storage.
 
 Gate: доказаны `FR-001`, `FR-002`, `FR-010`, `AC-001`, `AC-010`, правила dependencies и базовая линия supply chain с закреплёнными hashes.
 
-## Запланировано
+## Текущий этап
 
 ### Этап 02 — Intake, pipeline и один базовый OCR adapter
 
-Status: planned; adapter activation требует отдельного golden/worker evidence.
+Status: partial — pure routing, byte envelope and synthetic diagnostic verified; decoder/worker/representative benchmark/adapter admission remain open. Selected execution record: docs/STAGES.md.
 
 Реализовать безопасные ports intake/preprocessing, registry и выбор engines, fake adapter и локальный OCR adapter, выбранный по подтверждениям. Создать golden/baseline report и выбрать engine через ADR.
 
 Зависит от этапа 01. Gate: `FR-003`, `NFR-003`, `PERF-001`, `AC-002`, `AC-005`, `AC-007`, `AC-010`; изоляция decoder/engine обязательна.
+
+## Запланировано
 
 ### Этап 03 — Corrections, revisions и частичный повторный запуск
 

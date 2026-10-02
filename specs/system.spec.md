@@ -2058,24 +2058,15 @@ UI не является основной частью Core, но докумен
 
 ---
 
-# 71. PROMPTS
+# 71. STAGES
 
-КАРКАС должен создать поэтапный:
-
-```text
-PROMPTS.md
-```
-
-или структуру:
+КАРКАС должен создать единственный канонический документ:
 
 ```text
-prompts/
-    README.md
-    stage-01-...
-    stage-02-...
+docs/STAGES.md
 ```
 
-если количество этапов достаточно велико.
+В нём выбран один текущий record; поздние этапы не становятся исполняемыми без своих контрактов.
 
 Каждый этап должен иметь:
 
@@ -2100,7 +2091,7 @@ Rollback / failure conditions
 
 Не создавать одновременно несколько дублирующих status-документов.
 
-Использовать `docs/AI_STATUS.md` как единственный текущий источник состояния проекта. Не создавать рядом `PROGRESS.md` или другой дублирующий snapshot.
+Использовать `docs/STAGES.md` как единственный текущий источник plan/status/evidence/NEXT проекта. Не создавать рядом `PROGRESS.md` или другой дублирующий snapshot.
 
 Туда заносить:
 
@@ -2249,9 +2240,9 @@ DECISIONS.md
     ↓
 ARCHITECTURE.md
     ↓
-PROMPTS / current stage
+docs/STAGES.md / current stage
     ↓
-docs/AI_STATUS.md
+docs/STAGES.md
 ```
 
 Если реализация требует отойти от SPEC:
@@ -2321,9 +2312,9 @@ Existing TRC API
 13. подготовить security model;
 14. подготовить testing/benchmark strategy;
 15. создать ROADMAP;
-16. разбить реализацию на небольшие последовательные PROMPTS;
-17. каждому PROMPT назначить tests, DoD и acceptance criteria;
-18. настроить `docs/AI_STATUS.md`, `docs/AI_PLAN.md`, `docs/DEV_LOG.md` и `docs/LEARNING_LOG.md` без дублирующих status-файлов;
+16. разбить реализацию на небольшие последовательные records в `docs/STAGES.md`;
+17. каждому stage назначить tests, DoD и acceptance criteria;
+18. настроить `docs/STAGES.md`, `docs/DEV_LOG.md` и `docs/LEARNING_LOG.md` без дублирующих plan/status-файлов;
 19. добавить только необходимые project-specific hooks/skills/subagents/MCP;
 20. проверить весь КАРКАС на конфликт и дублирование AI Dev Team;
 21. **не начинать крупную реализацию OCR Core до завершения проектирования КАРКАСА**, если пользователь явно не потребовал обратного.
@@ -2341,13 +2332,8 @@ specs/
     README.md
     system.spec.md
 
-prompts/
-    README.md
-    stage-*.md
-
 docs/
-    AI_STATUS.md
-    AI_PLAN.md
+    STAGES.md
     ROADMAP.md
     DEV_LOG.md
     LEARNING_LOG.md

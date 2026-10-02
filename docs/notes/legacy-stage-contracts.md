@@ -1,3 +1,9 @@
+# Historical readable stage catalog
+
+Исторический snapshot прежнего `prompts/STAGES.md` на `d6344b4c7ca3a1001d7137a935d91c8e18f1bce6`; это не execution-state owner и не launcher. Текущий selected record, plan/status/evidence/NEXT находятся только в `docs/STAGES.md`.
+
+Source UTF-8/LF bytes SHA-256: `911e735981dabb8083316ec399a45c2e1a09bfd9a6754a76b0c8e2e06a749a8a`. Previous archived bytes retained in reachable remote parent `c6f6b39573fef8f2c0e6149a67e407afb263059c`, SHA-256 `5fbf50bfec9610dd7e8be14357d839ebbc3b6c543b38448c0793c4164beffb5d`; исходный повреждённый catalog этим не удалён из истории.
+
 # Канонические этапы text-recognition-core  Единый источник stage-prompts. Ниже сохранено полное содержание ранее существовавших этапов.
 
 ## stage-01-foundation
@@ -387,3 +393,5 @@ HTR/mixed adapter или явное отложенное по evidence реше�
 ## Условия остановки и отката
 
 Если ни один HTR-кандидат не проходит gates, сохранить port/contract HTR и явно отложить runtime support; не снижать thresholds и не выпускать слабый adapter. Отменить включение и config adapter, сохранив evidence benchmark.
+
+<!-- End of historical snapshot. -->

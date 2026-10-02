@@ -80,7 +80,11 @@ Raw snapshots являются append-only. Corrections ссылаются на 
 
 Локальный REST по умолчанию использует loopback/local IPC и аутентифицирует сгенерированный bearer token высокой энтропии или проверенные OS peer credentials. Bootstrap token использует приватный файл с проверенными permissions или OS credential store, но не аргументы CLI или environment output, который может попасть в logs; проверка выполняется за постоянное время, а rotation/revocation инвалидирует старые tokens. При отсутствии безопасного storage запуск завершается закрытым отказом. CORS полностью запрещён, cookie auth отсутствует. Non-loopback bind является remote profile и не может включаться одним удобным флагом.
 
-## ADR-012 — Stage 01 lock-aware Python build
+## ADR-012 — Единственный owner execution state
+
+**Статус:** принято 2026-09-15 по прямому правилу пользователя. Только `docs/STAGES.md` хранит текущий plan, status, evidence и NEXT. Подробный повреждённый исторический catalog и старые AI facts сохранены в `docs/notes/`; Stage 01 не запускать до readable contract и явной команды.
+
+## ADR-013 — Stage 01 lock-aware Python build
 
 **Статус:** принято для local library foundation 2026-09-30.
 
@@ -97,9 +101,9 @@ wheel smoke, 29 tests, Ruff/mypy и OSV audit 19/0. Rollback: revert Stage 01 co
 Affected stage: 01. Runtime OCR/model loaders остаются Stage 02 и не получают
 разрешения из этого решения.
 
-ADR-012 correction, NIGHT v3 2026-10-01: a re-materialized environment exposed Hatchling's dynamic editable dependency `editables~=0.3`, absent from the declared dev group. The documented no-build-isolation restore failed with `ModuleNotFoundError: editables`. Under existing SEC-009 / AC-010, include that build-only dependency in the same dev group and uv.lock; do not install an unlocked package as a workaround. This does not activate OCR, workers, storage or another package manager. Verification is recorded in the selected Stage 02 record after restore/tests.
+ADR-013 correction, NIGHT v3 2026-10-01: a re-materialized environment exposed Hatchling's dynamic editable dependency `editables~=0.3`, absent from the declared dev group. The documented no-build-isolation restore failed with `ModuleNotFoundError: editables`. Under existing SEC-009 / AC-010, include that build-only dependency in the same dev group and uv.lock; do not install an unlocked package as a workaround. This does not activate OCR, workers, storage or another package manager. Verification is recorded in the selected Stage 02 record after restore/tests.
 
-## ADR-013 — Детерминированный planning slice до включения OCR runtime
+## ADR-014 — Детерминированный planning slice до включения OCR runtime
 
 **Статус:** принято для Stage 02 local partial, 2026-09-30.
 
@@ -109,7 +113,7 @@ engine зависит от golden benchmark и worker isolation. Вариант�
 pure immutable planner. Выбран planner: максимум 32 descriptors, явные OCR/HTR
 capabilities, стабильный rank/name порядок, `LOCAL_ONLY` до выдачи route, explicit
 selection без fallback. Это обратимо через revert, persistent state отсутствует.
-Evidence: unit/privacy/negative tests, полный suite и static checks в `docs/AI_STATUS.md`.
+Evidence: unit/privacy/negative tests, полный suite и static checks в `docs/STAGES.md`.
 Rollback: revert Stage 02 planning commit. Affected stage: 02. Установленный
 Tesseract 5.5.3 с `eng/rus/ukr/osd` — кандидат benchmark, не выбранный adapter.
 
@@ -121,7 +125,7 @@ Tesseract 5.5.3 с `eng/rus/ukr/osd` — кандидат benchmark, не выб
 - `ADR-P04`: численные пороги review и performance budgets релиза по результатам baseline.
 - `ADR-P05`: HTR engine и GPU policy после появления репрезентативного handwriting dataset.
 
-## ADR-014 — AUTONOMOUS_DECISION: fixed synthetic printed golden smoke
+## ADR-015 — AUTONOMOUS_DECISION: fixed synthetic printed golden smoke
 
 Status: accepted as a Stage 02 preparation slice, 2026-09-30. Context: engine selection needs a versioned golden corpus, while worker isolation and representative/private-data approval are not yet complete. Options: select the installed engine from an ad hoc image; wait for all Stage 02 gates; or first commit tiny authored synthetic images and a fixed-corpus diagnostic. Selected the latter. Three English/Russian/Ukrainian PNGs and their manifest digests are checked before the tool invokes Tesseract. The diagnostic accepts no arbitrary input file and is never imported by the production library.
 

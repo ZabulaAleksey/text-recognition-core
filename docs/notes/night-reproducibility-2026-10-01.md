@@ -1,7 +1,7 @@
 # Воспроизводимость 2026-10-01
 
 Исходный HEAD 17976d112b29927a225dd02c451eeabe3a7fcfc6, feature/trc-stage-01-foundation.
-Восстановление старой migrated .venv выявило реальный lock gap: Hatchling editable build запрашивает editables~=0.3, отсутствующий в dev dependency graph. ADR-012 уточнён до изменения manifest. Добавлен только editables~=0.3 → 0.6 с hashes в uv.lock; другие версии не обновлены.
+Восстановление старой migrated .venv выявило реальный lock gap: Hatchling editable build запрашивает editables~=0.3, отсутствующий в dev dependency graph. ADR-013 уточнён до изменения manifest. Добавлен только editables~=0.3 → 0.6 с hashes в uv.lock; другие версии не обновлены.
 
 После двухступенчатого locked restore: 56 tests PASS, Ruff check/format PASS (22 files), strict mypy PASS (11 sources), uv lock --check --offline PASS, offline wheel/sdist build PASS. Единственное pytest warning — отказ записи .pytest_cache в restricted host, assertions прошли.
 Свежая отдельная среда work/trc-clean-env: uv sync --locked --offline --no-install-project, затем uv sync --locked --offline --no-build-isolation и import text_recognition_core PASS; 20 dependencies + project. uv audit --locked: 20 packages, zero known vulnerabilities/adverse statuses.
