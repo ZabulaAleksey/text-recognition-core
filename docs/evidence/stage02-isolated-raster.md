@@ -1,6 +1,7 @@
 # TRC-02-RASTER-01 — локальный isolated raster SDK slice
 
-Status: validated locally; full Stage02 partial. Baseline8be0282. Recovery2026-10-02
+Status: validated locally; full Stage02 partial. Source2bada34d05ddfd81b2284b419b0badd7780c48b3
+published main/origin0/0 with exact read-back; baseline8be0282 retained. Recovery2026-10-02
 подтвердила совпадение всех24 source/test/worker working hashes с final gate receipt.
 Fresh consumer оставался незавершённым и завершён после recovery; прежние canary
 кампании не повторялись. Machine-readable identities: stage02-isolated-raster.json.
