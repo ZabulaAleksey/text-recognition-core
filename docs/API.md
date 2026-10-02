@@ -182,3 +182,5 @@ ErrorResponse
 ## Будущий MCP
 
 Product MCP может предоставлять `recognize_document`, `recognize_region`, `get_recognition`, `list_uncertain_regions`, `apply_correction`, `get_revision`. Каждый tool делегирует тем же application use cases и политикам authorization/privacy; собственной реализации OCR в MCP нет.
+
+Public JSON byte boundaries reject duplicate decoded member names at every nesting level before model construction; redacted code `duplicate_json_key`. Existing JSON-specific model validation and byte limits remain unchanged. Requirement/evidence scope: `specs/features/json-boundary-validation.spec.md`; this does not activate a transport or engine.

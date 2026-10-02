@@ -1,5 +1,7 @@
 # Текущий исполняемый срез — этап 02, synthetic printed golden smoke and byte envelope
 
+- `TRC-NIGHT-JSON-DUPLICATE-01` — VERIFIED LOCALLY / INTEGRATION_PENDING. Public request/result byte parsers reject duplicate decoded JSON keys at every nesting level before unchanged Pydantic JSON validation; duplicate privacy policy values cannot select the later value. Twelve new regressions PASS; full75 PASS, Ruff check/format55 files and strict mypy11 source files PASS. Existing tests/schemas/dependencies unchanged. Validation used existing locked `--no-sync` environment Python3.13.7 with its retained3.13.6 marker warning; no fresh restore claimed. SPEC: `specs/features/json-boundary-validation.spec.md`. Stage02 remains PARTIAL; this does not activate engine/transport or prove egress isolation. Remote canonical documentation convergence is required before publication.
+
 **Состояние:** независимый planning slice Stage 02 реализуется после локально проверенного
 Stage 01. Pure routing, bounded synthetic printed golden smoke, joint stdout/stderr capture limit, and byte envelope проверены локально; контракты: `specs/features/engine-routing.spec.md`, `specs/features/printed-golden-smoke.spec.md` и `specs/features/source-byte-envelope.spec.md`. Полный Stage 02 остаётся открытым до worker isolation, репрезентативного golden benchmark и одного выбранного OCR adapter.
 

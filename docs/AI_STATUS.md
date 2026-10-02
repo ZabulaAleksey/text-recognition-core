@@ -1,5 +1,7 @@
 # Состояние проекта для AI
 
+- `TRC-NIGHT-JSON-DUPLICATE-01` — VERIFIED LOCALLY / INTEGRATION_PENDING. Public request/result byte parsers reject duplicate decoded JSON keys at every nesting level before unchanged Pydantic JSON validation; duplicate privacy policy values cannot select the later value. Twelve new regressions PASS; full75 PASS, Ruff check/format55 files and strict mypy11 source files PASS. Existing tests/schemas/dependencies unchanged. Validation used existing locked `--no-sync` environment Python3.13.7 with its retained3.13.6 marker warning; no fresh restore claimed. SPEC: `specs/features/json-boundary-validation.spec.md`. Stage02 remains PARTIAL; this does not activate engine/transport or prove egress isolation. Remote canonical documentation convergence is required before publication.
+
 ## Текущий Stage 02 — routing, golden smoke и byte envelope (2026-09-30)
 
 - 2026-10-01: исправлен locked editable restore gap editables; fresh offline two-step restore/import PASS, 56 tests/Ruff/format/mypy/build PASS; uv audit 20 packages zero known. Фактический Python 3.13.6. Evidence: docs/notes/night-reproducibility-2026-10-01.md; OCR/decoder isolation остаются PARTIAL.

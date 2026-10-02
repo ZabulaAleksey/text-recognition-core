@@ -313,9 +313,24 @@ class BoundaryValidationError(ValueError):
         super().__init__(",".join(codes))
 
 
+def _unique_json_object(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
+    result: dict[str, Any] = {}
+    for key, value in pairs:
+        if key in result:
+            raise BoundaryValidationError(("duplicate_json_key",))
+        result[key] = value
+    return result
+
+
 def _parse_json[B: Boundary](data: bytes, model: type[B], max_bytes: int) -> B:
     if not isinstance(data, bytes) or len(data) > max_bytes:
         raise BoundaryValidationError(("body_too_large_or_wrong_type",))
+    try:
+        json.loads(data.decode("utf-8"), object_pairs_hook=_unique_json_object)
+    except BoundaryValidationError:
+        raise
+    except (ValueError, RecursionError):
+        raise BoundaryValidationError(("json_invalid",)) from None
     try:
         return model.model_validate_json(data)
     except ValidationError as exc:

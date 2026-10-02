@@ -88,3 +88,5 @@ Remote engine adapters дополнительно по умолчанию зап
 ## Безопасная при инцидентах observability
 
 По умолчанию разрешены: непрозрачные correlation/job/engine IDs, durations, counts, status/error code, суммарное использование ресурсов и bucketed confidence. По умолчанию запрещены: распознанный текст, alternatives, изображения, raw metadata, локальные source paths, авторский текст, tokens и secrets.
+
+Public JSON byte boundaries reject duplicate decoded member names at every nesting level before model construction; redacted code `duplicate_json_key`. Existing JSON-specific model validation and byte limits remain unchanged. Requirement/evidence scope: `specs/features/json-boundary-validation.spec.md`; this does not activate a transport or engine.
