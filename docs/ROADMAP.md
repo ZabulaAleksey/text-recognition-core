@@ -27,7 +27,7 @@ Gate: доказаны `FR-001`, `FR-002`, `FR-010`, `AC-001`, `AC-010`, пра�
 
 ### Этап 02 — Intake, pipeline и один базовый OCR adapter
 
-Status: partial — pure routing, byte envelope and synthetic diagnostic verified; decoder/worker/representative benchmark/adapter admission remain open. Selected execution record: docs/STAGES.md.
+Status: partial — pure routing, byte envelope, synthetic diagnostic and bounded explicit isolated PNG/JPEG worker SDK slice validated locally. Full preprocessing/orchestration, representative benchmark, OCR adapter and production/private-input admission remain open. Selected execution record: docs/STAGES.md.
 
 Реализовать безопасные ports intake/preprocessing, registry и выбор engines, fake adapter и локальный OCR adapter, выбранный по подтверждениям. Создать golden/baseline report и выбрать engine через ADR.
 

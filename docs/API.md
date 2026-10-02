@@ -184,3 +184,24 @@ ErrorResponse
 Product MCP может предоставлять `recognize_document`, `recognize_region`, `get_recognition`, `list_uncertain_regions`, `apply_correction`, `get_revision`. Каждый tool делегирует тем же application use cases и политикам authorization/privacy; собственной реализации OCR в MCP нет.
 
 Public JSON byte boundaries reject duplicate decoded member names at every nesting level before model construction; redacted code `duplicate_json_key`. Existing JSON-specific model validation and byte limits remain unchanged. Requirement/evidence scope: `specs/features/json-boundary-validation.spec.md`; this does not activate a transport or engine.
+
+## Отдельный raster Application port — Stage 02
+
+`RasterDecoder.decode(source: bytes, cancellation: CancellationToken) -> DecodedRaster`
+не меняет `RecognitionRequest`, `RecognitionResult` или schemas v1. Результат содержит
+immutable RGB8 pixels, width/height, source SHA256/kind и pixel SHA256; geometry
+identity, без resize/rotation/ICC conversion. Источник PNG/JPEG ограничен 64MiB,
+dimensions4096, pixels16777216 и RGB50331648bytes. PDF и alpha/palette/CMYK,
+EXIF/ICC/animation/multiframe отклоняются content-free.
+
+Deployment передаёт `DockerRasterBinding` (exact native CLI path/hash, immutable
+image ID/environment и admission receipt digest), пользователь передаёт только
+bytes/token. Нет default provider, automatic pull или host Pillow fallback.
+`RasterDecoderError` содержит фиксированный code и, при неоднозначном cleanup,
+непрозрачный `OwnedRasterRecovery`; `pending_recovery` доступен read-only. После такого
+исхода следующий вызов блокируется до CLI. Не очищать recovery сменой instance без
+durable ownership resolution со стороны deployment. Library не предоставляет reset
+или broad prune. Non-Exception interruptions сохраняют оригинальный тип после cleanup.
+
+Supported parent provider: Windows native helper + trusted local Docker Desktop
+Linux daemon, image linux/amd64. Это bounded explicit SDK port, не REST/OCR/job API.

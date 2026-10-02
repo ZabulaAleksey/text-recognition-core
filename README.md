@@ -4,7 +4,10 @@ Text Recognition Core (TRC) — проектируемое переисполь�
 
 КАРКАС принят. Stage 01 реализует локальный Python 3.13 package с immutable domain hierarchy,
 framework-independent ports, strict versioned request/result models и генерируемыми JSON Schema.
-OCR engine, adapters, persistence и REST ещё не реализованы.
+Stage 02 добавляет отдельно вызываемый isolated PNG/JPEG decoder: immutable RGB8 port,
+Windows-owned Docker helper и disposable Linux worker. OCR engine, orchestration,
+persistence и REST ещё не реализованы. Decoder проверен на authored inputs;
+production/private-data admission и customer distribution остаются открытыми.
 
 ## Основной инвариант
 
@@ -32,7 +35,15 @@ Applications → stable TRC contracts → RecognitionEngine ports → engine ada
 Для clean restore Stage 01: `uv sync --locked --no-install-project`, затем
 `uv sync --locked --no-build-isolation`. Для проверки: `uv run pytest`,
 `uv run ruff check src tests`, `uv run ruff format --check src tests`, `uv run mypy src`,
-`uv lock --check --offline` и `uv audit --locked`. Offline build:
+`uv lock --check --offline`. Внешний `uv audit --locked` сейчас имеет статус
+`BLOCKED_EXTERNAL_APPROVAL`; не запускать и не заменять другим сервисом до точного
+разрешения на locked inventory и destination. Offline build:
 `uv build --offline --no-build-isolation` из активной проектной `.venv`.
 Python должен удовлетворять `requires-python` в pyproject.toml; проверенные версии и restore limitations находятся в selected STAGES record. Source of truth для
-статуса и открытых gates — [`docs/STAGES.md`](docs/STAGES.md). Текущий Stage 02 остаётся partial; isolated decoder и representative OCR benchmark ещё не приняты.
+статуса и открытых gates — [`docs/STAGES.md`](docs/STAGES.md). Текущий Stage 02 остаётся partial: bounded raster slice validated locally,
+representative OCR benchmark и engine adapter ещё не приняты.
+
+Worker-only Pillow12.3.0 находится в optional extra `raster-worker`; default SDK
+не устанавливает Pillow. Runtime binding задаёт deployment, без auto-pull, default
+activation или in-process fallback. Build inputs, проверенные hashes, fresh installed
+consumer и границы допуска: [`docs/evidence/stage02-isolated-raster.md`](docs/evidence/stage02-isolated-raster.md).

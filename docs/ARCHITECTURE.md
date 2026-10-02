@@ -2,7 +2,9 @@
 
 **Статус:** Stage 01 local foundation реализует domain values/hierarchy, application ports и
 versioned boundary models. Stage 02 добавляет pure engine routing plan без engine execution.
-OCR adapters, binary decoding, worker isolation, storage и runtime ещё не реализованы.
+Bounded PNG/JPEG decoding и disposable Linux worker реализованы через отдельный
+`RasterDecoder` port и Windows Docker Desktop adapter. OCR adapters, full recognition
+orchestration, storage и production runtime admission ещё не реализованы.
 Pre-decoder byte-envelope inspection computes a bounded digest and signature hint only.
 Архитектура обеспечивает `specs/system.spec.md` и не утверждает их наличие в коде.
 
@@ -135,3 +137,23 @@ Docker упаковывает выбранный профиль, но не оп�
 - обнаружение приватных fixtures и утечки telemetry;
 - проверки isolation/crash/cleanup workers и целостности dependency/model;
 - golden reports регрессии качества и производительности.
+
+## Реализованный raster slice Stage 02
+
+`application/raster.py` задаёт immutable `DecodedRaster` и `RasterDecoder`:
+bounded bytes → decode(source, CancellationToken) → exact RGB8 bytes, source/pixel
+digests, dimensions и kind. `intake/raster_protocol.py` независимо проверяет bounded
+frame. Domain, `RecognitionEngine`, registry и public v1 schemas не изменены.
+
+`WindowsDockerRasterDecoder` получает immutable deployment-owned binding; один
+вызов занимает semaphore/один disposable container. Trusted native helper запускается
+suspended внутри Windows Job. Исходник передаётся после inspect controls только через
+stdin; Linux worker импортирует Pillow, parent SDK его не импортирует. Один absolute
+20s deadline включает 4s cleanup reserve; raster доступен только после EOF, exit0 и
+exact image+nonce+CID removal. Поддержка POSIX host отсутствует. Docker daemon/VM
+доверенные и привилегированные; UID65532 worker не доказывает rootless daemon.
+
+Неизвестный create/cleanup оставляет immutable `pending_recovery` и блокирует новые
+вызовы того же instance до deployment-owned resolution. Durable cross-instance
+journal/reaper и parent-process/host-loss recovery ещё не реализованы. Проверенный
+контур локален и использует только authored inputs; он не является full OCR pipeline.

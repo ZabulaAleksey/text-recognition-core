@@ -1,0 +1,14 @@
+Pillow 12.3.0 raster-worker local execution notice
+
+The accompanying LICENSE is the complete unmodified notice from the exact
+hash-locked Pillow wheel, including its bundled dependencies.
+This software is based in part on the work of the Independent JPEG Group.
+Portions of this software are copyright The FreeType Project
+(www.freetype.org). All rights reserved.
+The available FreeType License (FTL) option applies to this local review.
+No upstream author endorsement is claimed.
+
+This local worker is not admitted for customer binary/container distribution.
+Base OS/library linkage, per-file variants and distribution obligations require
+separate review before redistribution. Retaining notices is not patent clearance
+or a full vulnerability-closure certificate.

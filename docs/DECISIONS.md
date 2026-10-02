@@ -130,3 +130,23 @@ Tesseract 5.5.3 с `eng/rus/ukr/osd` — кандидат benchmark, не выб
 Status: accepted as a Stage 02 preparation slice, 2026-09-30. Context: engine selection needs a versioned golden corpus, while worker isolation and representative/private-data approval are not yet complete. Options: select the installed engine from an ad hoc image; wait for all Stage 02 gates; or first commit tiny authored synthetic images and a fixed-corpus diagnostic. Selected the latter. Three English/Russian/Ukrainian PNGs and their manifest digests are checked before the tool invokes Tesseract. The diagnostic accepts no arbitrary input file and is never imported by the production library.
 
 Why/reversibility: gives a reproducible quality smoke and tamper guard without promoting Tesseract or weakening the native worker boundary. Revert the slice to remove it; no persistence or public API changes. Evidence: 39 tests, Ruff/mypy PASS; Tesseract 5.5.3 local CER/WER 0 on three easy printed images, with measured latencies in `docs/evidence/stage02-printed-smoke.md`. Rollback: revert this bounded commit. Affected stage: 02 only. Representative golden data, decoder isolation and ADR-P02 remain open.
+
+## ADR-016 — AUTONOMOUS_DECISION: bounded raster decoder evaluation
+
+**Статус:** принят для dependency-ready Stage02 slice, 2026-10-02.
+
+Проверка platform controls доказала no-egress/read-only/cgroup/ulimit и exact-owned
+cleanup; cached Python3.12.5 не подходит проекту>=3.13. Pillow12.3.0 выбран только
+как worker-only PNG/JPEG evaluation candidate: официальный release/security contract,
+Python3.13 support и сменяемый port вместо parsing в parent/domain. Runtime activation
+требует wheel/license/security/hash и actual immutable Python3.13 worker evidence.
+Локальная authored evaluation проверена: pinned base CPython3.13.16, exact Pillow12.3
+wheel, retained notices, controls/failure paths и fresh SDK consumer без host Pillow.
+External21-package audit остаётся BLOCKED_EXTERNAL_APPROVAL; full base/native closure,
+production/private inputs и customer distribution этим решением не допускаются.
+Binary stdin/stdout с log-driver none исключает host source mounts и raster Docker logs;
+strict bounded framing/cleanup описаны в isolated-raster-decoder.spec.md. Непривилегированный
+container process не делает Docker Desktop daemon rootless; daemon/VM доверенные.
+PDF/representative benchmark/production decoder/ADR-P02 не выбраны; ADR-P01 остаётся
+открытым для PDF и полного evaluation. Это engineering choice в явном NIGHT scope,
+без новой product policy, cloud/data export или native fallback.

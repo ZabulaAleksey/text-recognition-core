@@ -90,3 +90,28 @@ Remote engine adapters дополнительно по умолчанию зап
 По умолчанию разрешены: непрозрачные correlation/job/engine IDs, durations, counts, status/error code, суммарное использование ресурсов и bucketed confidence. По умолчанию запрещены: распознанный текст, alternatives, изображения, raw metadata, локальные source paths, авторский текст, tokens и secrets.
 
 Public JSON byte boundaries reject duplicate decoded member names at every nesting level before model construction; redacted code `duplicate_json_key`. Existing JSON-specific model validation and byte limits remain unchanged. Requirement/evidence scope: `specs/features/json-boundary-validation.spec.md`; this does not activate a transport or engine.
+
+## Проверенный bounded raster contour (2026-10-02)
+
+Контракт ADR-016 / `specs/features/isolated-raster-decoder.spec.md` реализован для
+explicit local authored PNG/JPEG evaluation. Fixed local daemon endpoint, trusted
+native helper identity, clean CLI config, owned Job containment и inspect-before-input;
+не caller-controlled runtime. Worker UID65532, read-only root, capDropALL,
+no-new-privileges, network none, no host/source/socket mounts, private tmpfs64MiB,
+memory256MiB/no added swap, CPU1/PID8/NOFILE32/FSIZE64MiB, logging none. Parent verifies
+bounded framing, original source/hash/length, zero exit и exact ownership cleanup.
+
+Unknown create/cleanup и interrupted cleanup retain immutable pending recovery;
+same instance refuses subsequent work. Durable cross-instance journal/host-loss reaper
+не реализованы. Docker Desktop daemon/VM привилегированные trusted dependencies;
+secure zeroization, production/private corpus или rootless admission не заявлены.
+
+Существующие authored control/failure canaries и independent bounded reviews сохранены
+в evidence; recovery их не повторяет. Full locked238PASS/0skip и fresh installed
+SDK actual PNG/JPEG/no-host-Pillow подтверждают точный локальный slice.
+
+`TRC_DEPENDENCY_AUDIT = BLOCKED_EXTERNAL_APPROVAL`: current21-package locked inventory
+не передавался OSV. Нельзя заменять destination/инструмент или выводить current
+zero-findings из прежнего Stage01 audit/одной public Pillow metadata snapshot.
+Full base/native dependency vulnerability/license closure и customer redistribution
+остаются отдельными gates. Сохранённые wheel notices и exact hash не снимают их.

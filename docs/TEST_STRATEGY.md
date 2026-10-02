@@ -93,3 +93,29 @@ runtime configuration. 29 unit/schema/supply-chain tests PASS, lint/type/build P
 
 
 Тесты ссылаются на `FR-*`, `NFR-*`, `SEC-*`, `PERF-*` или `AC-*` в именах, markers или metadata отчёта. Требование завершено только после реализации и связи с автоматическим подтверждением либо когда документированная ручная проверка объясняет невозможность автоматизации.
+
+## Stage 02 isolated raster evidence (2026-10-02)
+
+Сохранённый final locked offline suite:238PASS/0skip на project CPython3.13.7,
+Ruff check/format37files PASS, mypy15sourcefiles PASS, lock check22resolved PASS,
+offline no-build-isolation wheel/sdist PASS. Original75 accepted tests/models/fixtures
+не изменены. New163: worker28, framing31, parent64, review10, recovery4,
+interruption14, native Windows helper10, actual authored PNG/JPEG2.
+
+Current source/test/worker working-copy hashes совпали с final receipt после recovery;
+прошедшие canary campaigns не повторялись. Existing live controls,18actual input cases
+и8failure canaries документированы отдельно от unit/mock evidence. Они не подтверждают
+representative OCR quality, rootless daemon, process/host-loss recovery или production.
+
+Fresh consumer v5: offline restore unchanged five default dependencies with
+`--require-hashes`, install built SDK wheel `--no-deps`, isolated `-I -B` Python3.13.7
+import from fresh site-packages; Pillow distribution/PIL import absent. Actual benign
+authored RGB PNG/gray JPEG returned exact expected pixels and hashes after cleanup.
+uv0.12.3 local-file multiple-distinct SHA allowance reproduced a mismatch even when
+computed hash was a member; narrowing only core to its exact already-locked Windows
+wheel hash succeeded. Other four package/hash blocks stayed byte-identical; wrong-hash
+negative stayed fail. No hash bypass, version upgrade or dependency scan occurred.
+
+External audit is `BLOCKED_EXTERNAL_APPROVAL`; no hosted TRC CI run is inferred from
+local validation. Detailed sanitized proof: `docs/evidence/stage02-isolated-raster.md`
+and `.json`. The entire Stage02 remains partial.

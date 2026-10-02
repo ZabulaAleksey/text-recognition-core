@@ -9,6 +9,9 @@ description = "Typed, offline-first text recognition core contracts"
 requires-python = ">=3.13,<4"
 dependencies = ["pydantic>=2.11,<3"]
 
+[project.optional-dependencies]
+raster-worker = ["pillow==12.3.0"]
+
 [[tool.uv.index]]
 name = "pypi"
 url = "https://pypi.org/simple"
